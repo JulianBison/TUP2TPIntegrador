@@ -1,3 +1,97 @@
+/*Variables*/
+
+:root {
+  --principal: #1e741f;
+  --secondary: #e0f2e0;
+  --backcolor1: rgba(28, 40, 51, 0.95);
+  --backcolor2: rgba(119, 176, 170, 0.95);
+  --color3: rgba(227, 254, 247, 0.95);
+  --backcolor3: rgba(0, 60, 67, 0.95);
+  --font1: "Montserrat", sans-serif;
+  --font2: "Holtwood One SC", serif;
+}
+
+/* Normalize */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--backcolor3);
+  color: var(--secondary);
+}
+
+.nav {
+  position: sticky;
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--backcolor2);
+  li {
+    list-style: none;
+    text-decoration: none;
+  }
+  align-items: center;
+}
+
+.logo {
+  width: 5vw;
+  align-items: center;
+}
+
+.nav ul {
+  display: flex;
+  align-items: center;
+  li {
+    margin: 0 3vh;
+    border: solid 1px var(--secondary);
+    border-radius: 5px;
+    padding: 1% 2%;
+  }
+}
+
+a {
+  text-decoration: none;
+  list-style-type: none;
+}
+
+.active {
+  background-color: var(--color3);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  background: rgb(119, 176, 170);
+  background: linear-gradient(
+    180deg,
+    rgba(119, 176, 170) 0%,
+    rgba(0, 60, 67) 100%
+  );
+  height: 92vh;
+}
+
+.principal {
+  text-align: center;
+  justify-content: space-around;
+  margin: 10px;
+}
+
 .footer {
-  color: red;
+  color: var(--secondary);
+  display: flex;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  background-color: var(--backcolor2);
+  height: 8vh;
+}
+
+.footer,
+div {
+  align-content: center;
+  justify-content: space-around;
 }
