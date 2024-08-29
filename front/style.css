@@ -3,81 +3,97 @@
 
 :root {
   --principal: #1e741f;
-  --secondary: #e0f2e0;
-  --backcolor1: rgba(28, 40, 51, 0.95);
-  --backcolor2: rgb(107, 138, 122);
+  --secondary: #FFF8E8;
+  /* --secondary: #ededed; */
+  --backcolor1: #40513B;
+  --backcolor2: #9DC08B;
+  /* --backcolor1: rgba(28, 40, 51, 0.95);
+  --backcolor2: rgb(107, 138, 122); */
   --color3: rgba(227, 254, 247, 0.95);
   --backcolor3: rgb(37, 67, 54);
   --font1: "Montserrat", sans-serif;
   --font2: "Holtwood One SC", serif;
   --font3: "Abel", sans-serif;
+  --font4: "Poppins", sans-serif;
+  --font5: "Raleway", sans-serif;
 }
 
 
 /* Normalize */
-*,
-*::after,
-*::before {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
 }
 
 html {
   color: var(--secondary);
-  /* max-width: 1200px; */
-  /* width: 95%; */
-  margin: auto;
-  font-family: var(--font3);
-  background: var(--backcolor2);
+  font-family: var(--font5);
   background: linear-gradient(
     180deg,
     var(--backcolor2) 0%,
     var(--backcolor1) 100%
-  );
-}
-
-.formatoprincipal{
-  max-width: 1200px;
-  margin: auto;
-}
-
-.nav {
-  position: sticky;
-  display: flex;
-  justify-content: space-around;
-  /* background-color: var(--backcolor2); */
-  li {
-    list-style: none;
+    );
+  }
+  
+  .formatoprincipal{
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .nav {
+    position: sticky;
+    height: 11vh;
+    
+  }
+  
+  .container_nav {
+    width: 1240px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    width: 7vw;
+    align-items: center;
+    
+  }
+  
+  .nav ul {
+    display: flex;
+    justify-content: center;
+    margin-left: 8%;
+  }
+  
+  .nav ul li {
+    width: 140px;
+    height: 35px;
+    margin: 0 4vh;
+    background-color: var(--secondary);
+    font-weight: bold;
+    border-radius: 10px;
+    text-align: center;
+    padding-top: 1.5%;
+    
+  }
+  
+  a {
     text-decoration: none;
-  }
-  align-items: center;
-  height: 10vh;
-}
-
-.logo {
-  width: 5vw;
-  align-items: center;
-}
-
-.nav ul {
-  display: flex;
-  align-items: center;
-  li {
-    margin: 0 3vh;
-    border: solid 1px var(--secondary);
-    border-radius: 5px;
-    padding: 1% 2%;
-  }
-}
-
-a {
-  text-decoration: none;
-  list-style-type: none;
+    list-style-type: none;
+    color: var(--backcolor3);
 }
 
 .active {
   background-color: var(--color3);
+}
+
+.nav p {
+  font-weight:  bold;
+  color: var(--backcolor3);
 }
 
 main {
