@@ -1,15 +1,18 @@
 /*Variables*/
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 
 :root {
   --principal: #1e741f;
   --secondary: #e0f2e0;
   --backcolor1: rgba(28, 40, 51, 0.95);
-  --backcolor2: rgba(119, 176, 170, 0.95);
+  --backcolor2: rgb(107, 138, 122);
   --color3: rgba(227, 254, 247, 0.95);
-  --backcolor3: rgba(0, 60, 67, 0.95);
+  --backcolor3: rgb(37, 67, 54);
   --font1: "Montserrat", sans-serif;
   --font2: "Holtwood One SC", serif;
+  --font3: "Abel", sans-serif;
 }
+
 
 /* Normalize */
 *,
@@ -21,10 +24,21 @@
 }
 
 html {
-  background-color: var(--backcolor3);
   color: var(--secondary);
+  /* max-width: 1200px; */
+  /* width: 95%; */
+  margin: auto;
+  font-family: var(--font3);
+  background: var(--backcolor2);
+  background: linear-gradient(
+    180deg,
+    var(--backcolor2) 0%,
+    var(--backcolor1) 100%
+  );
+}
+
+.formatoprincipal{
   max-width: 1200px;
-  width: 95%;
   margin: auto;
 }
 
@@ -32,7 +46,7 @@ html {
   position: sticky;
   display: flex;
   justify-content: space-around;
-  background-color: var(--backcolor2);
+  /* background-color: var(--backcolor2); */
   li {
     list-style: none;
     text-decoration: none;
@@ -69,12 +83,6 @@ a {
 main {
   display: flex;
   flex-direction: column;
-  background: rgb(119, 176, 170);
-  background: linear-gradient(
-    180deg,
-    rgba(119, 176, 170) 0%,
-    rgba(0, 60, 67) 100%
-  );
   min-height: 82vh;
 }
 
@@ -87,11 +95,13 @@ main {
 .principal_tarjeta{
   display: flex;
   width: 80%;
-  column-gap: 15px;
+  column-gap: 10px;
   justify-content: center;
   margin: 20px auto;
+  
 }
 .tarjeta {
+  font-family: var(--font3);
   border: var(--secondary) 0px solid;
   border-radius: 5px;
   width: 35%;
@@ -99,15 +109,20 @@ main {
   background-color: var(--secondary);
   padding: 5px;
 }
+.tarjeta:hover{
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+    scale: 105%;
+    transition: ease-in-out 0.15s;
+}
 
 .footer {
   color: var(--secondary);
   display: flex;
   position: relative;
   bottom: 0px;
-  max-width: 1200px;
+  /* max-width: 1200px; */
   width: 100%;
-  background-color: var(--backcolor2);
+  background-color: var(--backcolor3);
   height: 8vh;
 }
 
