@@ -4,29 +4,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
+  <!-- title -->
+  <title>dolar UTN</title>
+  <!-- icon -->
+  <link rel="icon" type="image/png" href="../front/images/ilustracion-signo-dolar.png">
+  <!-- css -->
+  <link rel="stylesheet" href="../front/css/reset.css">
+  <link rel="stylesheet" href="../front/css/styles.css">
+  <!-- fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
-  <title>dolar UTN</title>
 </head>
 
 <body>
-
   <nav class="nav">
     <div class="container_nav">
-      <div class="logo"> <img src="../images/ilustracion-signo-dolar-dibujada-mano (2).png" alt="logo dolar"> </div>
-      <div class="menu">
-        <a class="active" href="../paginas/index.html">Home</a>
-        <a href="../paginas/historico.html">Historico</a>
-        <a href="../paginas/index.html">Actualizar</a>
+      <div class="logo"> 
+        <img src="./images/ilustracion-signo-dolar.png" alt="logo dolar"> 
       </div>
-      <div class="actualización"><p>Ultima actualización: {$$}</p></div>
+      <div class="menu">
+        <a class="active" href="../front/index.html">Home</a>
+        <a href="../front/historico.html">Historico</a>
+        <a href="../front/index.html">Actualizar</a>
+      </div>
+      <div class="actualización">
+        <p>Ultima actualización: {$$}</p>
+      </div>
     </div>
   </nav>
-  <div class="formatoprincipal">
-    <main>
+  <main>
+    <div class="formatoprincipal">
       <div class="principal">
         <h1>Cotización actuales de monedas</h1>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur, dolorum. Vel fugiat voluptas nostrum
@@ -54,12 +63,19 @@
           <P>Cotización del Euro en el mercado.</P>
         </div>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
   <footer class="footer">
-    <div>Malcom Foca, Lautaro Ceballos, Julian Bison, Ezequiel Natale</div>
-    <div>Tecnicatura en programación - UTN</div>
-    <div>Datos tomados desde dolarapi.com</div>
+    <div class="container_footer">
+      <div class="footer-nombres">
+        <a href="#">Julian Bison</a>
+        <a href="#">Lautaro Ceballos</a>
+        <a href="#">Malcom Foca</a>
+        <a href="#">Ezequiel Natale</a>
+      </div>
+      <div>Tecnicatura en programación - UTN</div>
+      <div>Datos tomados desde dolarapi.com</div>
+    </div>
   </footer>
 </body>
 
