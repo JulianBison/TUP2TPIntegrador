@@ -1,6 +1,6 @@
 :root {
   --principal: #1e741f;
-  --secondary: #FFF8E8;
+  --secondary: #ECF0F1;
   --backcolor1: #40513B;
   --backcolor2: #9DC08B;
   --backcolor3: rgb(37, 67, 54);
@@ -20,6 +20,8 @@ html {
   position: sticky;
   top: 0;
   background-color: var(--backcolor2); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  
 }
 
 .container_nav {
@@ -64,6 +66,7 @@ nav div a {
   border-radius: 10px;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .nav div a:hover {
