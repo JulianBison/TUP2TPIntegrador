@@ -1,8 +1,8 @@
 :root {
   --principal: #1e741f;
-  --secondary: #ECF0F1;
-  --backcolor1: #40513B;
-  --backcolor2: #9DC08B;
+  --secondary: #ecf0f1;
+  --backcolor1: #40513b;
+  --backcolor2: #9dc08b;
   --backcolor3: rgb(37, 67, 54);
   --font1: "Raleway", sans-serif;
 }
@@ -10,18 +10,18 @@
 html {
   color: var(--secondary);
   font-family: var(--font1);
-  background: linear-gradient(180deg,
-      var(--backcolor2) 15%,
-      var(--backcolor1) 85%);
+  background: linear-gradient(
+    180deg,
+    var(--backcolor2) 15%,
+    var(--backcolor1) 85%
+  );
 }
-
 
 .nav {
   position: sticky;
   top: 0;
-  background-color: var(--backcolor2); 
+  background-color: var(--backcolor2);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-  
 }
 
 .container_nav {
@@ -41,20 +41,17 @@ html {
 
 .logo img {
   width: 50%;
-  
 }
 
 .nav div {
   display: flex;
   align-content: center;
-  
 }
 
 .menu {
   display: flex;
   justify-content: space-between;
 }
-
 
 nav div a {
   width: 140px;
@@ -84,7 +81,6 @@ a {
 .active {
   background-color: var(--backcolor1) !important;
   color: var(--secondary) !important;
-  
 }
 
 .actualización p {
@@ -110,12 +106,11 @@ main {
 
 .principal_tarjeta {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 80%;
   column-gap: 10px;
   justify-content: center;
   margin: 20px auto;
-  
 }
 
 .tarjeta {
@@ -125,7 +120,7 @@ main {
   color: black;
   background-color: var(--secondary);
   padding: 5px;
-  margin: 30px
+  margin: 30px;
 }
 
 .tarjeta:hover {
@@ -161,5 +156,4 @@ main {
 .footer-nombres a {
   margin: 2% 0;
   color: var(--secondary);
-
 }
