@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- title -->
-  <title>dolar UTN</title>
   <!-- icon -->
   <link rel="icon" type="image/png" href="../front/images/ilustracion-signo-dolar.png">
   <!-- css -->
@@ -16,24 +14,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
+
+  <!-- title -->
+  <title>Cotización del Dólar UTN</title>
 </head>
 
 <body>
   <nav class="nav">
     <div class="container_nav">
-      <div class="logo"> 
-        <img src="./images/ilustracion-signo-dolar.png" alt="logo dolar"> 
+      <div class="logo">
+        <img src="./images/ilustracion-signo-dolar.png" alt="logo dolar">
       </div>
       <div class="menu">
         <a class="active" href="../front/index.html">Home</a>
-        <a href="../front/historico.html">Historico</a>
+        <a href="../front/historico.html">Histórico</a>
         <a href="../front/index.html">Actualizar</a>
       </div>
       <div class="actualización">
-        <p>Ultima actualización: {$$}</p>
+        <p>Última actualización: <span id="ultima_actualizacion">No disponible</span></p>
       </div>
     </div>
   </nav>
+
   <main>
     <div class="formatoprincipal">
       <div class="principal">
@@ -44,27 +46,49 @@
       </div>
       <div class="principal_tarjeta">
         <div class="tarjeta">
-          <h2>DOLAR OFICIAL</h2>
-          <p>Cotización del dólar estadounidense en el mercado oficial. Es decir, el precio de compra y venta de dólares
-            en bancos y casas de cambio autorizadas por el Banco Central de la República Argentina (BCRA).</p>
+          <h2>DÓLAR OFICIAL</h2>
+          <p><strong>Compra:</strong> <span id="dolar_oficial_compra">-</span></p>
+          <p><strong>Venta:</strong> <span id="dolar_oficial_venta">-</span></p>
+        </div>
+        
+        <div class="tarjeta">
+          <h2>EURO</h2>
+          <p><strong>Compra:</strong> <span id="euro_compra">-</span></p>
+          <p><strong>Venta:</strong> <span id="euro_venta">-</span></p>
         </div>
         <div class="tarjeta">
+          <h2>REAL BRASILEÑO</h2>
+          <p><strong>Compra:</strong> <span id="real_brasileno_compra">-</span></p>
+          <p><strong>Venta:</strong> <span id="real_brasileno_venta">-</span></p>
+        </div>
+        
+        <div class="tarjeta">
+          <h2>PESO CHILENO</h2>
+          <p><strong>Compra:</strong> <span id="peso_chileno_compra">-</span></p>
+          <p><strong>Venta:</strong> <span id="peso_chileno_venta">-</span></p>
+        </div>
+        
+        <div class="tarjeta">
+          <h2>PESO URUGUAYO</h2>
+          <p><strong>Compra:</strong> <span id="peso_uruguayo_compra">-</span></p>
+          <p><strong>Venta:</strong> <span id="peso_uruguayo_venta">-</span></p>
+        </div>
+        <!-- <div class="tarjeta">
           <h2>DOLAR MEP</h2>
-          <p>Cotización del dólar estadounidense en el mercado bursátil. Es decir, el precio de compra y venta de
-            dólares en el mercado de valores. También conocido como Dólar MEP</p>
+          <p>Cotización del dólar estadounidense en el mercado bursátil...</p>
+          <p><strong>Compra:</strong> <span id="dolar_mep_compra">-</span></p>
+          <p><strong>Venta:</strong> <span id="dolar_mep_venta">-</span></p>
         </div>
         <div class="tarjeta">
-          <h2>DOLAR TARJETA </h2>
-          <P>Es el valor de la cotización del dólar estadounidense en el mercado oficial, más el impuesto PAIS (30%), el
-            impuesto a las ganancias (100%) y el impuesto a cuenta de bienes personales (25%).</P>
-        </div>
-        <div class="tarjeta">
-          <h2>EURO </h2>
-          <P>Cotización del Euro en el mercado.</P>
-        </div>
+          <h2>DOLAR TARJETA</h2>
+          <p>Cotización del dólar tarjeta...</p>
+          <p><strong>Compra:</strong> <span id="dolar_tarjeta_compra">-</span></p>
+          <p><strong>Venta:</strong> <span id="dolar_tarjeta_venta">-</span></p>
+        </div> -->
       </div>
     </div>
   </main>
+
   <footer class="footer">
     <div class="container_footer">
       <div class="footer-nombres">
@@ -77,6 +101,9 @@
       <div>Datos tomados desde dolarapi.com</div>
     </div>
   </footer>
+
+  <!-- Agregamos el script al final del body -->
+  <script src="./js/script.js"></script>
 </body>
 
 </html>
