@@ -3,17 +3,17 @@
 fetch("https://dolarapi.com/v1/cotizaciones")
   .then(response => response.json())
   .then(data => {
-    console.log(data); // Verifica los datos en la consola
+    console.log(data);
 
-    // Buscamos los datos por nombre de moneda y casa
+    
     const dolarOficial = data.find(item => item.moneda === 'USD' && item.casa === 'oficial');
     const euro = data.find(item => item.moneda === 'EUR' && item.casa === 'oficial');
     const realBrasileno = data.find(item => item.moneda === 'BRL' && item.casa === 'oficial');
     const pesoChileno = data.find(item => item.moneda === 'CLP' && item.casa === 'oficial');
     const pesoUruguayo = data.find(item => item.moneda === 'UYU' && item.casa === 'oficial');
 
-                 
-    // Asignamos los valores de compra y venta a las tarjetas
+    
+    
     if (dolarOficial) {
       document.getElementById("dolar_oficial_compra").innerHTML = dolarOficial.compra || "No disponible";
       document.getElementById("dolar_oficial_venta").innerHTML = dolarOficial.venta || "No disponible";
