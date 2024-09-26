@@ -93,7 +93,7 @@ a {
 
 main {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   min-height: 82vh;
 }
 
@@ -110,7 +110,8 @@ main {
 
 .principal_tarjeta {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   width: 80%;
   column-gap: 10px;
   justify-content: center;
