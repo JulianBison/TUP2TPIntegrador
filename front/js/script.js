@@ -3,7 +3,6 @@
 fetch("https://dolarapi.com/v1/dolares")
   .then(response => response.json())
   .then(data => {
-    
   for (i=0; i<data.length; i++){
     agregarCotizacion(data[i].moneda , data[i].nombre, data[i].venta, data[i].compra)
   };
