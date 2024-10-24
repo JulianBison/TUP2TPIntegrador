@@ -22,7 +22,7 @@ class Tipo(Moneda):
         return self.tipo
     def __str__(self):
         if self.cotizaciones:
-            return f"La moneda es: {self.nombre} {self.tipo} {self.cotizaciones[len(self.cotizaciones)-1]}"
+            return f"La moneda es: {super().mostrar_nombre()} {self.mostrar_nombre()} {self.cotizaciones[len(self.cotizaciones)-1]}"
         else:
             return f"La moneda es: {self.nombre} {self.tipo} sin cotizaciones"
     def cargarcotizacion(self,cotizacion):
@@ -60,8 +60,3 @@ print(moneda1)
 
 print(cotizacion1)
 print(moneda1.cotizaciones[0])
-
-moneda2 = Tipo("","")
-moneda2.cargar_nombre("Dolar")
-moneda2.cargar_nombre("Oficial")
-print(moneda2)
