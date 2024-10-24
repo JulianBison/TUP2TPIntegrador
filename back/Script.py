@@ -48,7 +48,7 @@ class Cotizacion:
     def mostrarfecha(self):
         return self.fecha
     def __str__(self):
-        return f"El precio de compra es: {self.compra}, el precio de venta es: {self.venta} y la fecha de actualizacion es {self.fecha}"
+        return f"El precio de compra es: {self.mostrarcompra()}, el precio de venta es: {self.mostrarventa()} y la fecha de actualizacion es {self.mostrarfecha()}"
         
 
 moneda1 = Tipo("oficial","dolar")
