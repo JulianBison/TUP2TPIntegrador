@@ -1,20 +1,24 @@
-class Moneda:
+from abc import ABC, abstractmethod
+class Moneda(ABC):
+    @abstractmethod
     def __init__ (self,nombre):
         self.cargar_nombre(nombre)
+    @abstractmethod    
     def cargar_nombre(self,nombre):
         self.nombre = nombre
+    @abstractmethod      
     def mostrar_nombre(self):
         print(self.nombre)
 
 class Tipo(Moneda):
     def __init__ (self, tipo, moneda):
-        self.cargar_tipo(tipo)
-        Moneda.cargar_nombre(self,moneda)
+        self.cargar_nombre(tipo)
+        super.cargar_nombre(self,moneda)
         self.cotizaciones = []
         
-    def cargar_tipo(self,tipo):
+    def cargar_nombre(self,tipo):
         self.tipo = tipo
-    def mostrar_tipo(self):
+    def mostrar_nombre(self):
         return self.tipo
     def __str__(self):
         if self.cotizaciones:
@@ -50,7 +54,7 @@ class Cotizacion:
 moneda1 = Tipo("oficial","dolar")
 moneda2 = Tipo("","")
 moneda2.cargar_nombre("Dolar")
-moneda2.cargar_tipo("Oficial")
+moneda2.cargar_nombre("Oficial")
 cotizacion1=Cotizacion(900,950,"20121009")
 moneda1.cargarcotizacion(cotizacion1)
 
