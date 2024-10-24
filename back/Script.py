@@ -13,7 +13,7 @@ class Moneda(ABC):
 class Tipo(Moneda):
     def __init__ (self, tipo, moneda):
         self.cargar_nombre(tipo)
-        super.cargar_nombre(self,moneda)
+        Moneda.cargar_nombre(self,moneda)
         self.cotizaciones = []
         
     def cargar_nombre(self,tipo):
