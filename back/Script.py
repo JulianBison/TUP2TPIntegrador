@@ -1,3 +1,4 @@
+import requests
 from abc import ABC, abstractmethod
 class Moneda(ABC):
     @abstractmethod
@@ -50,13 +51,12 @@ class Cotizacion:
     def __str__(self):
         return f"El precio de compra es: {self.mostrarcompra()}, el precio de venta es: {self.mostrarventa()} y la fecha de actualizacion es {self.mostrarfecha()}"
         
+response = requests.get("https://dolarapi.com/v1/dolares")
+print(response.json())
 
 moneda1 = Tipo("oficial","dolar")
-
 cotizacion1=Cotizacion(900,950,"20121009")
 moneda1.cargarcotizacion(cotizacion1)
-
 print(moneda1)
-
 print(cotizacion1)
 print(moneda1.cotizaciones[0])
