@@ -1,0 +1,44 @@
+[
+  {
+  "casa": "oficial",
+  "compra": 10001010101010101,
+  "fechaActualizacion": "2024-09-06T15:04:00.000Z",
+  "moneda": "USD",
+  "nombre": "D\u00f3lar",
+  "venta": 1014
+},
+{
+  "casa": "oficial",
+  "compra": 1082.9163,
+  "fechaActualizacion": "2024-09-06T20:56:00.000Z",
+  "moneda": "EUR",
+  "nombre": "Euro",
+  "venta": 1088.6792
+},
+{
+  "casa": "oficial",
+  "compra": 172.078,
+  "fechaActualizacion": "2024-09-06T20:56:00.000Z",
+  "moneda": "BRL",
+  "nombre": "Real Brasile\u00f1o",
+  "venta": 172.1658
+},
+{
+  "casa": "oficial",
+  "compra": 1.0383,
+  "fechaActualizacion": "2024-09-06T20:56:00.000Z",
+  "moneda": "CLP",
+  "nombre": "Peso Chileno",
+  "venta": 1.0383
+},
+{
+  "casa": "oficial",
+  "compra": 23.8541,
+  "fechaActualizacion": "2024-09-06T20:56:00.000Z",
+  "moneda": "UYU",
+  "nombre": "Peso Uruguayo",
+  "venta": 23.8543
+},
+{
+  "fechaActualizacion" :"2024-09-06T15:04:00.000Z"
+}]

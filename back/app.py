@@ -1,30 +1,27 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, jsonify
+from flask_cors import CORS
 import requests
-from datetime import datetime
+import json  # Importa el módulo JSON para escribir en un archivo
 
 app = Flask(__name__)
+CORS(app)
 
-@app.route('/')
-def index():
-    # Renderiza la página principal
-    return render_template('index.html')
-
-@app.route('/cotizaciones')
+@app.route('/api/cotizaciones', methods=['GET'])
 def obtener_cotizaciones():
-    # Llamada a la API para obtener las cotizaciones
     try:
+        # Realiza la solicitud a la API externa
         response = requests.get("https://dolarapi.com/v1/cotizaciones")
+        response.raise_for_status()
         data = response.json()
-    except Exception as e:
-        data = {"error": str(e)}
-    
-    return jsonify(data)
 
-@app.route('/actualizar')
-def actualizar_fecha():
-    # Ruta para mostrar la última fecha de actualización
-    fecha_actualizacion = datetime.now().strftime("%d de %B de %Y, %H:%M")
-    return jsonify({"fecha": fecha_actualizacion})
+        # Guarda los datos en un archivo JSON llamado cotizaciones.json
+        with open('./cotizaciones.json', 'w') as archivo_json:
+            json.dump(data, archivo_json, indent=4)  # Usa indent=4 para un formato legible
+
+        return jsonify(data)
+    except requests.RequestException:
+        return jsonify({"error": "Error al obtener datos"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
+
