@@ -2,14 +2,14 @@ import requests
 import json                                        
 
 data = {
-    'service_id': 'service_xxxxxxx',
-    'template_id': 'template_xxxxxxx',
-    'user_id': 'xxxxxxxxxxxxxxxxx',
-    'accessToken': 'xx-xxxx-xxxxxxxxxxxxx',
+    'service_id': 'service_9lmfke1',
+    'template_id': 'template_iqc45hy',
+    'user_id': 'fVp3TYCnjNdgCdHIi',
+    'accessToken': '_qDyYbn5_6AihShGrNmIs',
     'template_params': {
-        'from_name': 'James',
-        'to_name': 'Seba',
-        'message': 'Este es el mensaje'
+        'from_name': 'Ezequiel',
+        'to_name': '{}',
+        'message': 'Cotizacion pedida {}'
     }
 }
 
@@ -34,3 +34,5 @@ except requests.exceptions.RequestException as error:
     print(f'Oops... {error}')
     if error.response is not None:
         print(error.response.text)
+
+
