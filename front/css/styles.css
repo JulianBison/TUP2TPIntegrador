@@ -99,13 +99,15 @@ main {
 
 .formatoprincipal {
   max-width: 1240px;
-  margin: auto;
+  margin: 20px;
+  align-items: center;
+  
 }
 
 .principal {
   text-align: center;
   justify-content: space-around;
-  margin: 10px;
+  margin: 10pxauto;
 }
 
 .principal_tarjeta {
@@ -169,4 +171,8 @@ display: none;
   margin: 2% 0;
   color: var(--secondary);
 
+}
+
+.principal_tarjeta .tarjeta:first-child {
+  display: none;
 }

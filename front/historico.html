@@ -16,22 +16,41 @@
     <title>dolar UTN</title>
 </head>
 <body>
-    <nav class="nav">
-        <img class="logo" src="../images/ilustracion-signo-dolar-dibujada-mano (2).png" alt="logo dolar">
-        <ul >
-          <li><a href="./index.html">Home</a></li>
-          <li class="active"><a href="./historico.html">Historico</a></li>
-          <li><a href="./#">Actualizar</a></li>
-        </ul>
-        <p>Ultima actualización: {$$}</p>
-      </nav>
-    <main>
-        <h1>Histórico Cotización</h1>
-    </main>
+  <nav class="nav">
+    <div class="container_nav">
+      <div class="logo">
+        <img src="./images/ilustracion-signo-dolar.png" alt="logo dolar">
+      </div>
+      <div class="menu">
+        <a  href="../front/index.html">Home</a>
+        <a class="active" href="../front/historico.html">Histórico</a>
+        <a href="../front/index.html">Actualizar</a>
+      </div>
+      <div class="actualización">
+        <p>Última actualización: <span id="ultima_actualizacion">No disponible</span></p>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <div class="formatoprincipal">
+      <div class="principal">
+        <h1>Historico Cotización de monedas</h1>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur, dolorum. Vel fugiat voluptas nostrum
+          earum, facere repellat sed distinctio eaque deleniti! Ut sit quia atque, molestiae enim excepturi asperiores
+          exercitationem.</p>
+      </div>
+  </main>
     <footer class="footer">
-        <div>Malcom Foca, Lautaro Ceballos, Julian Bison, Ezequiel Natale</div>
+      <div class="container_footer">
+        <div class="footer-nombres">
+          <a href="#">Julian Bison</a>
+          <a href="#">Lautaro Ceballos</a>
+          <a href="#">Malcom Foca</a>
+          <a href="#">Ezequiel Natale</a>
+        </div>
         <div>Tecnicatura en programación - UTN</div>
         <div>Datos tomados desde dolarapi.com</div>
-      </footer>
+      </div>
+    </footer>
 </body>
 </html>

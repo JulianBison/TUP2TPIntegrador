@@ -1,0 +1,45 @@
+{
+    "cotizaciones": [
+        {
+            "moneda": "USD",
+            "casa": "oficial",
+            "nombre": "Dólar",
+            "compra": 974,
+            "venta": 1014,
+            "fechaActualizacion": "2024-09-06T15:04:00.000Z"
+        },
+        {
+            "moneda": "EUR",
+            "casa": "oficial",
+            "nombre": "Euro",
+            "compra": 1082.9163,
+            "venta": 1088.6792,
+            "fechaActualizacion": "2024-09-06T20:56:00.000Z"
+        },
+        {
+            "moneda": "BRL",
+            "casa": "oficial",
+            "nombre": "Real Brasileño",
+            "compra": 172.078,
+            "venta": 172.1658,
+            "fechaActualizacion": "2024-09-06T20:56:00.000Z"
+        },
+        {
+            "moneda": "CLP",
+            "casa": "oficial",
+            "nombre": "Peso Chileno",
+            "compra": 1.0383,
+            "venta": 1.0383,
+            "fechaActualizacion": "2024-09-06T20:56:00.000Z"
+        },
+        {
+            "moneda": "UYU",
+            "casa": "oficial",
+            "nombre": "Peso Uruguayo",
+            "compra": 23.8541,
+            "venta": 23.8543,
+            "fechaActualizacion": "2024-09-06T20:56:00.000Z"
+        }
+    ],
+    "ultima_actualizacion": "2024-11-06T21:24:18.518442"
+}
