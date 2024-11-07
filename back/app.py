@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)  # Activa CORS en toda la aplicación
 
 # Ruta del archivo JSON
-json_file_path = "cotizaciones.json"
+json_file_path = os.path.join(os.path.dirname(__file__), "cotizaciones.json")
 
 # Ruta para servir el archivo JSON directamente
 @app.route('/static/cotizaciones.json')
@@ -45,7 +45,12 @@ def obtener_datos_api_y_guardar():
         # Realiza la solicitud a la API
         response = requests.get("https://dolarapi.com/v1/cotizaciones")
         response.raise_for_status()
-        cotizaciones = response.json()
+        cotizaciones = response.json()[1:]
+
+        # Realiza una segunda solicitud a la API para obtener los datos de dólares
+        response2 = requests.get("https://dolarapi.com/v1/dolares")
+        response2.raise_for_status()
+        cotizaciones += response2.json()
 
         # Guarda los datos en el archivo JSON con codificación UTF-8
         with open(json_file_path, "w", encoding="utf-8") as f:

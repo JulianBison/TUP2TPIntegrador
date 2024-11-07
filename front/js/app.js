@@ -1,4 +1,4 @@
-fetch("../../back/cotizaciones.json") // http://127.0.0.1:5000/static/cotizaciones.json" &&
+fetch("http://127.0.0.1:5000/api/cotizaciones") // http://127.0.0.1:5000/static/cotizaciones.json" &&
   .then(response => response.json())
   .then(data => {
     console.log(data);
@@ -13,15 +13,40 @@ fetch("../../back/cotizaciones.json") // http://127.0.0.1:5000/static/cotizacion
   })
   .catch(error => {
     console.error("Error al obtener las cotizaciones:", error);
+    console.log("Intentar traer del cache")
+    fetch("../back/cotizaciones.json")
+    .then(response => response.json())
+    .then(data => {
+    console.log(data);
+    if (data.cotizaciones) {
+      // Itera sobre las cotizaciones y las agrega al DOM
+      data.cotizaciones.forEach(cotizacion => {
+        let nombre = cotizacion.nombre;
+        agregarCotizacion(cotizacion.moneda,cotizacion.nombre,cotizacion.casa, cotizacion.venta, cotizacion.compra, cotizacion.fechaActualizacion);
+      });
+      actualizarFecha(data.ultima_actualizacion);
+    }
+  })
   });
 
-function agregarCotizacion(nombre, venta, compra) {
+function agregarCotizacion(moneda,nombre,tipo, venta, compra,fecha) {
   let contenedor = document.querySelector(".principal_tarjeta");
   let tarjeta = document.getElementsByClassName("tarjeta")[0].cloneNode(true);
-
-  tarjeta.querySelector("#tarjeta-prueba").innerHTML = nombre;
-  tarjeta.querySelector("#precio-compra").innerHTML = compra;
-  tarjeta.querySelector("#precio-venta").innerHTML = venta;
+  let fechaFormateada = '';
+  let nombreTarjeta
+  fechaFormateada = fechaFormateada.concat(fecha.slice(0,10)," ",fecha.slice(11,19));
+  if(moneda=='USD'){
+    nombreTarjeta=moneda;
+    tipo=nombre;
+  }
+  else{
+    nombreTarjeta=nombre;
+  }
+  tarjeta.querySelector("#nombre-moneda").innerHTML = nombreTarjeta;
+  tarjeta.querySelector("#tipo").innerHTML = tipo;
+  tarjeta.querySelector("#precio-compra").innerHTML ='Compra: ' + compra;
+  tarjeta.querySelector("#precio-venta").innerHTML ='Venta: ' +  venta;
+  tarjeta.querySelector("#fecha-actualizacion").innerHTML = 'Fecha actualizacion: <br>' + fechaFormateada;
   contenedor.appendChild(tarjeta);
 }
 

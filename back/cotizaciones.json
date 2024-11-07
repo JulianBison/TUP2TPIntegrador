@@ -1,14 +1,6 @@
 {
     "cotizaciones": [
         {
-            "moneda": "USD",
-            "casa": "oficial",
-            "nombre": "Dólar",
-            "compra": 974,
-            "venta": 1014,
-            "fechaActualizacion": "2024-09-06T15:04:00.000Z"
-        },
-        {
             "moneda": "EUR",
             "casa": "oficial",
             "nombre": "Euro",
@@ -39,7 +31,63 @@
             "compra": 23.8541,
             "venta": 23.8543,
             "fechaActualizacion": "2024-09-06T20:56:00.000Z"
+        },
+        {
+            "moneda": "USD",
+            "casa": "oficial",
+            "nombre": "Oficial",
+            "compra": 974,
+            "venta": 1014,
+            "fechaActualizacion": "2024-11-05T15:04:00.000Z"
+        },
+        {
+            "moneda": "USD",
+            "casa": "blue",
+            "nombre": "Blue",
+            "compra": 1115,
+            "venta": 1135,
+            "fechaActualizacion": "2024-11-06T20:55:00.000Z"
+        },
+        {
+            "moneda": "USD",
+            "casa": "bolsa",
+            "nombre": "Bolsa",
+            "compra": 1140,
+            "venta": 1142.1,
+            "fechaActualizacion": "2024-11-06T20:55:00.000Z"
+        },
+        {
+            "moneda": "USD",
+            "casa": "contadoconliqui",
+            "nombre": "Contado con liquidación",
+            "compra": 1174.1,
+            "venta": 1181.1,
+            "fechaActualizacion": "2024-11-06T20:55:00.000Z"
+        },
+        {
+            "moneda": "USD",
+            "casa": "mayorista",
+            "nombre": "Mayorista",
+            "compra": 991.5,
+            "venta": 994.5,
+            "fechaActualizacion": "2024-11-06T10:24:00.000Z"
+        },
+        {
+            "moneda": "USD",
+            "casa": "cripto",
+            "nombre": "Cripto",
+            "compra": 1154,
+            "venta": 1159.11,
+            "fechaActualizacion": "2024-11-06T20:55:00.000Z"
+        },
+        {
+            "moneda": "USD",
+            "casa": "tarjeta",
+            "nombre": "Tarjeta",
+            "compra": 1558.4,
+            "venta": 1622.4,
+            "fechaActualizacion": "2024-11-05T15:04:00.000Z"
         }
     ],
-    "ultima_actualizacion": "2024-11-06T22:03:03.181241"
+    "ultima_actualizacion": "2024-11-07T09:39:27.981996"
 }
