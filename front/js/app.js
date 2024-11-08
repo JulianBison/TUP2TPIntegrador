@@ -6,7 +6,7 @@ fetch("http://127.0.0.1:5000/api/cotizaciones") // http://127.0.0.1:5000/static/
       // Itera sobre las cotizaciones y las agrega al DOM
       data.cotizaciones.forEach(cotizacion => {
         let nombre = cotizacion.nombre;
-        agregarCotizacion(nombre, cotizacion.venta, cotizacion.compra);
+        agregarCotizacion(cotizacion.moneda,cotizacion.tipo,cotizacion.venta, cotizacion.compra, cotizacion.fecha);
       });
       actualizarFecha(data.ultima_actualizacion);
     }
@@ -21,28 +21,20 @@ fetch("http://127.0.0.1:5000/api/cotizaciones") // http://127.0.0.1:5000/static/
     if (data.cotizaciones) {
       // Itera sobre las cotizaciones y las agrega al DOM
       data.cotizaciones.forEach(cotizacion => {
-        let nombre = cotizacion.nombre;
-        agregarCotizacion(cotizacion.moneda,cotizacion.nombre,cotizacion.casa, cotizacion.venta, cotizacion.compra, cotizacion.fechaActualizacion);
+        agregarCotizacion(cotizacion.moneda,cotizacion.tipo,cotizacion.venta, cotizacion.compra, cotizacion.fecha);
       });
       actualizarFecha(data.ultima_actualizacion);
     }
   })
   });
 
-function agregarCotizacion(moneda,nombre,tipo, venta, compra,fecha) {
+function agregarCotizacion(moneda,tipo, venta, compra,fecha) {
   let contenedor = document.querySelector(".principal_tarjeta");
   let tarjeta = document.getElementsByClassName("tarjeta")[0].cloneNode(true);
   let fechaFormateada = '';
   let nombreTarjeta
   fechaFormateada = fechaFormateada.concat(fecha.slice(0,10)," ",fecha.slice(11,19));
-  if(moneda=='USD'){
-    nombreTarjeta=moneda;
-    tipo=nombre;
-  }
-  else{
-    nombreTarjeta=nombre;
-  }
-  tarjeta.querySelector("#nombre-moneda").innerHTML = nombreTarjeta;
+  tarjeta.querySelector("#nombre-moneda").innerHTML = moneda;
   tarjeta.querySelector("#tipo").innerHTML = tipo;
   tarjeta.querySelector("#precio-compra").innerHTML ='Compra: ' + compra;
   tarjeta.querySelector("#precio-venta").innerHTML ='Venta: ' +  venta;

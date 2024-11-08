@@ -1,9 +1,76 @@
 from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS  # Importa CORS
-import requests
-import json
-import os
+from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
+import requests,json,os
+
+class Moneda(ABC):
+    @abstractmethod
+    def __init__ (self, nombre):
+        self.nombre = nombre
+    @abstractmethod
+    def cargar_nombre(self, nombre):
+        self.nombre = nombre
+    @abstractmethod      
+    def mostrar_nombre(self):
+        return self.nombre
+
+class Tipo(Moneda):
+    def __init__ (self, moneda, tipo):
+        super().__init__(moneda)
+        self.cargar_tipo(tipo)
+        self.cotizaciones = []
+    
+    def cargar_nombre(self, nombre):
+        return super().cargar_nombre(nombre)
+
+    def cargar_tipo(self,tipo):
+        
+        self.tipo = tipo
+    def mostrar_tipo(self):
+        return self.tipo
+    def mostrar_nombre(self):
+        return super().mostrar_nombre()
+    
+    def __str__(self):
+        if self.cotizaciones:
+            return f"La moneda es: {self.mostrar_nombre()} {self.mostrar_tipo()} {self.cotizaciones[len(self.cotizaciones)-1]}"
+        else:
+            return f"La moneda es: {self.nombre} {self.tipo} sin cotizaciones"
+    def cargarcotizacion(self,cotizacion):
+        self.cotizaciones.append(cotizacion)
+    def mostrarcotizaciones(self):
+        return self.cotizaciones
+    def ultimacotizacion(self):
+        return self.cotizaciones[-1]
+
+    def json_actual(self):
+        return {'moneda': self.mostrar_nombre(), 
+              'tipo': self.mostrar_tipo(),
+              'venta': self.ultimacotizacion().mostrarventa(), 
+              'compra': self.ultimacotizacion().mostrarcompra(),
+              'fecha': self.ultimacotizacion().mostrarfecha()
+              }
+    
+class Cotizacion:
+    def __init__(self,venta,compra,fecha):
+        self.cargarventa(venta)
+        self.cargarcompra(compra)
+        self.cargarfecha(fecha)
+    def cargarcompra(self,compra):
+        self.compra = compra
+    def cargarventa(self,venta):
+        self.venta = venta
+    def cargarfecha(self,fecha):
+        self.fecha = fecha
+    def mostrarcompra(self):
+        return self.compra
+    def mostrarventa(self):
+        return self.venta
+    def mostrarfecha(self):
+        return self.fecha
+    def __str__(self):
+        return f"El precio de compra es: {self.mostrarcompra()}, el precio de venta es: {self.mostrarventa()} y la fecha de actualizacion es {self.mostrarfecha()}"
 
 app = Flask(__name__)
 CORS(app)  # Activa CORS en toda la aplicación
@@ -43,15 +110,27 @@ def obtener_y_guardar_cotizaciones():
 def obtener_datos_api_y_guardar():
     try:
         # Realiza la solicitud a la API
-        response = requests.get("https://dolarapi.com/v1/cotizaciones")
+        response = requests.get("https://dolarapi.com/v1/dolares")
         response.raise_for_status()
-        cotizaciones = response.json()[1:]
+        listamonedas = []
+        for cambio in response.json():
+            moneda=Tipo(cambio['moneda'],cambio['nombre'])
+            cotizacion=Cotizacion(cambio['venta'],cambio['compra'],cambio['fechaActualizacion'])
+            moneda.cargarcotizacion(cotizacion)
+            listamonedas.append(moneda)
 
         # Realiza una segunda solicitud a la API para obtener los datos de dólares
-        response2 = requests.get("https://dolarapi.com/v1/dolares")
+        response2 = requests.get("https://dolarapi.com/v1/cotizaciones")
         response2.raise_for_status()
-        cotizaciones += response2.json()
-
+        for cambio in response2.json()[1:]:
+            moneda=Tipo(cambio['moneda'],cambio['nombre'])
+            cotizacion=Cotizacion(cambio['venta'],cambio['compra'],cambio['fechaActualizacion'])
+            moneda.cargarcotizacion(cotizacion)
+            listamonedas.append(moneda)
+        
+        cotizaciones=[moneda.json_actual() for moneda in listamonedas]
+        
+        
         # Guarda los datos en el archivo JSON con codificación UTF-8
         with open(json_file_path, "w", encoding="utf-8") as f:
             json.dump({"cotizaciones": cotizaciones, "ultima_actualizacion": datetime.now().isoformat()},
