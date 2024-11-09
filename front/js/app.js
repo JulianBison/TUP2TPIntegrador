@@ -64,59 +64,96 @@ function actualizarFecha(fecha) {
 
 document.getElementById('DatosHistorico').addEventListener('submit', function(event) {
   event.preventDefault();
-  
-  // Retrieve form values
-  let dolar = document.getElementById('dolar').value;
-  let fechainicio = document.getElementById('fechainicio').value;
-  let fechafin = document.getElementById('fechafin').value;
-  let valores = parseInt(document.getElementById('valores').value);
 
-  console.log("Tipo dolar:", dolar);
-  console.log("Fecha inicio:", fechainicio);
-  console.log("Fecha fin:", fechafin);
-  console.log("Número de Días:", valores);
+  // Obtener valores del formulario
+  const dolar = document.getElementById('dolar').value;
+  const fechainicio = document.getElementById('fechainicio').value;
+  const fechafin = document.getElementById('fechafin').value;
+  const valores = parseInt(document.getElementById('valores').value);
 
   const peticion = `http://127.0.0.1:5000/api/historico/${dolar}/${fechainicio}/${fechafin}/${valores}`;
-
-  fetch(peticion, { mode: 'cors' })
+  
+  fetch(peticion, {mode: 'cors'})
     .then(response => response.json())
     .then(data => {
-      if (!data || data.length === 0) {
-          console.error('No data received');
-          return;
-      }
       console.log(data);
+
+      // Preparar datos para el gráfico
       const labels = data.map(item => item.fecha);
-      const valoresData = data.map(item => item.compra);
+      const compraData = data.map(item => item.compra);
+      const ventaData = data.map(item => item.venta);
 
+      // Configuración de los datos y estilo de los datasets
       const chartData = {
-          labels: labels,
-          datasets: [{
-              label: 'Valores',
-              data: valoresData,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1
-          }]
-      };
-        
-      const config = {
-          type: 'line',
-          data: chartData,
-          options: {
-              responsive: true,
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
-              }
+        labels: labels,
+        datasets: [
+          {
+            label: 'Compra',
+            data: compraData,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 2,
+            pointRadius: 3,
+            tension: 0.3  // Curvatura de la línea
+          },
+          {
+            label: 'Venta',
+            data: ventaData,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 2,
+            pointRadius: 3,
+            tension: 0.3
           }
+        ]
       };
 
-      const myChart = new Chart(
-          document.getElementById('Grafico'),
-          config
-      );
+      // Opciones del gráfico
+      const config = {
+        type: 'line',
+        data: chartData,
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: `Histórico del Dólar (${dolar})`,
+              font: {
+                size: 18
+              }
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+            },
+            legend: {
+              position: 'top',
+            }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Fecha'
+              }
+            },
+            y: {
+              beginAtZero: false,
+              title: {
+                display: true,
+                text: 'Cotización (Pesos)'
+              }
+            }
+          }
+        }
+      };
+
+      // Crear o actualizar el gráfico
+      const ctx = document.getElementById('Grafico').getContext('2d');
+      if (window.myChart) {
+        window.myChart.destroy();  // Destruir gráfico previo si existe
+      }
+      window.myChart = new Chart(ctx, config);
     })
     .catch(error => console.error('Error en la petición:', error));
 });
