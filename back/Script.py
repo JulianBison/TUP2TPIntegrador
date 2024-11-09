@@ -1,24 +1,29 @@
-class Moneda:
-    def __init__ (self,nombre):
-        self.cargar_nombre(nombre)
-    def cargar_nombre(self,nombre):
+import requests
+from abc import ABC, abstractmethod
+class Moneda(ABC):
+    @abstractmethod
+    def __init__ (self, nombre):
         self.nombre = nombre
+    @abstractmethod
+    def cargar_nombre(self, nombre):
+        self.nombre = nombre
+    @abstractmethod      
     def mostrar_nombre(self):
-        print(self.nombre)
+        return self.nombre
 
 class Tipo(Moneda):
     def __init__ (self, tipo, moneda):
-        self.cargar_tipo(tipo)
-        Moneda.cargar_nombre(self,moneda)
+        super().__init__(moneda)
+        self.cargar_nombre(tipo)
         self.cotizaciones = []
         
-    def cargar_tipo(self,tipo):
+    def cargar_nombre(self,tipo):
         self.tipo = tipo
-    def mostrar_tipo(self):
+    def mostrar_nombre(self):
         return self.tipo
     def __str__(self):
         if self.cotizaciones:
-            return f"La moneda es: {self.nombre} {self.tipo} {self.cotizaciones[len(self.cotizaciones)-1]}"
+            return f"La moneda es: {super().mostrar_nombre()} {self.mostrar_nombre()} {self.cotizaciones[len(self.cotizaciones)-1]}"
         else:
             return f"La moneda es: {self.nombre} {self.tipo} sin cotizaciones"
     def cargarcotizacion(self,cotizacion):
@@ -44,18 +49,14 @@ class Cotizacion:
     def mostrarfecha(self):
         return self.fecha
     def __str__(self):
-        return f"El precio de compra es: {self.compra}, el precio de venta es: {self.venta} y la fecha de actualizacion es {self.fecha}"
+        return f"El precio de compra es: {self.mostrarcompra()}, el precio de venta es: {self.mostrarventa()} y la fecha de actualizacion es {self.mostrarfecha()}"
         
+response = requests.get("https://dolarapi.com/v1/dolares")
+print(response.json())
 
 moneda1 = Tipo("oficial","dolar")
-moneda2 = Tipo("","")
-moneda2.cargar_nombre("Dolar")
-moneda2.cargar_tipo("Oficial")
 cotizacion1=Cotizacion(900,950,"20121009")
 moneda1.cargarcotizacion(cotizacion1)
-
 print(moneda1)
-print(moneda2)
 print(cotizacion1)
 print(moneda1.cotizaciones[0])
-
