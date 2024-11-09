@@ -1,4 +1,5 @@
-fetch("http://127.0.0.1:5000/api/cotizaciones") // http://127.0.0.1:5000/static/cotizaciones.json" &&
+if (window.location.href.includes("index.html")) {
+  fetch("http://127.0.0.1:5000/api/cotizaciones")
   .then(response => response.json())
   .then(data => {
     console.log(data);
@@ -27,6 +28,8 @@ fetch("http://127.0.0.1:5000/api/cotizaciones") // http://127.0.0.1:5000/static/
     }
   })
   });
+}
+
 
 function agregarCotizacion(moneda,tipo, venta, compra,fecha) {
   let contenedor = document.querySelector(".principal_tarjeta");
