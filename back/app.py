@@ -142,6 +142,43 @@ def obtener_datos_api_y_guardar():
         print(f"Error al obtener los datos de la API: {e}")
         return {"error": "Error al obtener datos de la API"}, 500
 
+def obtener_historico(tipo_dolar, fecha_inicio, fecha_fin, valores):
+    fechainicial = datetime.strptime(fecha_inicio, "%Y-%m-%d")
+    fechafinal = datetime.strptime(fecha_fin, "%Y-%m-%d")
+    delta_dias = (fechafinal - fechainicial) / (valores - 1)
+    datosgrafica = []
+
+    for cont in range(valores):
+        fecha_actual = fechainicial + delta_dias * cont
+        fecha_str = fecha_actual.strftime("%Y/%m/%d")
+        url = (f"https://api.argentinadatos.com/v1/cotizaciones/dolares/{tipo_dolar}/{fecha_str}")
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            cotizacion_data = response.json()
+            
+            cotizacion = Cotizacion(
+                venta=cotizacion_data['venta'],
+                compra=cotizacion_data['compra'],
+                fecha=cotizacion_data['fecha']
+            )
+            
+            datosgrafica.append({
+                'fecha': cotizacion.fecha,
+                'venta': cotizacion.venta,
+                'compra': cotizacion.compra
+            })
+        except requests.RequestException as e:
+            print(f"Error fetching data for {fecha_str}: {e}")
+
+    return jsonify(datosgrafica)
+
+
+@app.route('/api/historico/<tipo_dolar>/<fecha_inicio>/<fecha_fin>/<int:valores>')
+def api_historico(tipo_dolar, fecha_inicio, fecha_fin, valores):
+    return obtener_historico(tipo_dolar, fecha_inicio, fecha_fin, valores)
+
+
 @app.route('/api/cotizaciones', methods=['GET'])
 def obtener_cotizaciones():
     data = obtener_y_guardar_cotizaciones()

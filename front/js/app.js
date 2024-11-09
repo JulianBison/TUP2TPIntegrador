@@ -61,3 +61,62 @@ function actualizarFecha(fecha) {
     console.error("No se encontró el elemento con el id 'ultima_actualizacion'.");
   }
 }
+
+document.getElementById('DatosHistorico').addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  // Retrieve form values
+  let dolar = document.getElementById('dolar').value;
+  let fechainicio = document.getElementById('fechainicio').value;
+  let fechafin = document.getElementById('fechafin').value;
+  let valores = parseInt(document.getElementById('valores').value);
+
+  console.log("Tipo dolar:", dolar);
+  console.log("Fecha inicio:", fechainicio);
+  console.log("Fecha fin:", fechafin);
+  console.log("Número de Días:", valores);
+
+  const peticion = `http://127.0.0.1:5000/api/historico/${dolar}/${fechainicio}/${fechafin}/${valores}`;
+
+  fetch(peticion, { mode: 'cors' })
+    .then(response => response.json())
+    .then(data => {
+      if (!data || data.length === 0) {
+          console.error('No data received');
+          return;
+      }
+      console.log(data);
+      const labels = data.map(item => item.fecha);
+      const valoresData = data.map(item => item.compra);
+
+      const chartData = {
+          labels: labels,
+          datasets: [{
+              label: 'Valores',
+              data: valoresData,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+          }]
+      };
+        
+      const config = {
+          type: 'line',
+          data: chartData,
+          options: {
+              responsive: true,
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      };
+
+      const myChart = new Chart(
+          document.getElementById('Grafico'),
+          config
+      );
+    })
+    .catch(error => console.error('Error en la petición:', error));
+});
