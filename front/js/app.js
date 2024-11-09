@@ -56,8 +56,24 @@ function actualizarFecha(fecha) {
   let elementoFecha = document.getElementById("ultima_actualizacion");
   
   if (elementoFecha) {
-    elementoFecha.innerHTML = fechaFormateada;
+    elementoFecha.innerHTML ="Ultima actualizacion: " + fechaFormateada;
   } else {
     console.error("No se encontró el elemento con el id 'ultima_actualizacion'.");
   }
 }
+
+//funcion para esconder el menu al scrollear
+let prevScrollPos = window.scrollY;
+const nav = document.querySelector('.nav');
+
+window.onscroll = function() {
+  let currentScrollPos = window.scrollY;
+  
+  if (prevScrollPos > currentScrollPos) {
+    nav.classList.remove("nav-hidden");
+  } else {
+    nav.classList.add("nav-hidden");
+  }
+  
+  prevScrollPos = currentScrollPos;
+};
