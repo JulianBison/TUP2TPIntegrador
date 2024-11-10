@@ -46,11 +46,11 @@ class Tipo(Moneda):
 
     def json_actual(self):
         return {'moneda': self.mostrar_nombre(), 
-              'tipo': self.mostrar_tipo(),
-              'venta': self.ultimacotizacion().mostrarventa(), 
-              'compra': self.ultimacotizacion().mostrarcompra(),
-              'fecha': self.ultimacotizacion().mostrarfecha()
-              }
+            'tipo': self.mostrar_tipo(),
+            'venta': self.ultimacotizacion().mostrarventa(), 
+            'compra': self.ultimacotizacion().mostrarcompra(),
+            'fecha': self.ultimacotizacion().mostrarfecha()
+            }
     
 class Cotizacion:
     def __init__(self,venta,compra,fecha):
@@ -73,7 +73,7 @@ class Cotizacion:
         return f"El precio de compra es: {self.mostrarcompra()}, el precio de venta es: {self.mostrarventa()} y la fecha de actualizacion es {self.mostrarfecha()}"
 
 app = Flask(__name__)
-CORS(app)  # Activa CORS en toda la aplicación
+CORS(app, supports_credentials=True)   # Activa CORS en toda la aplicación
 
 # Ruta del archivo JSON
 json_file_path = os.path.join(os.path.dirname(__file__), "cotizaciones.json")
@@ -185,4 +185,22 @@ def obtener_cotizaciones():
     return jsonify(data)
 
 if __name__ == '__main__':
+    app.run(debug=True)
+
+
+@app.route('/api/contacto', methods=['POST'])
+def contact():
+    data = request.getjson()  # Recibe los datos JSON enviados desde el formulario
+    print("Datos recibidos:", data)  # Imprime los datos en la consola para verificar
+
+    # Aquí podrías agregar lógica adicional, como enviar un correo con los datos del mensaje
+
+    # Envía una respuesta al cliente confirmando que el mensaje fue recibido
+    response = {
+        "status": "success",
+        "message": "Mensaje recibido correctamente"
+    }
+    return jsonify(response)  # Envía una respuesta JSON
+
+#if name == '_main':
     app.run(debug=True)
