@@ -1,31 +1,37 @@
+/* CSS para dispositivos grandes (escritorio) */
 :root {
-  --principal: #1e741f;
-  --secondary: #ECF0F1;
-  --backcolor1: #40513B;
-  --backcolor2: #9DC08B;
+  --principal: #081c15;
+  --secondary2: #2d6a4f;
+  --secondary: #ddd8c4;
+  --backcolor1: #40916c;
+  --backcolor2: #95d5b2;
   --backcolor3: rgb(37, 67, 54);
   --font1: "Raleway", sans-serif;
 }
-
-html {
-  color: var(--secondary);
-  font-family: var(--font1);
-  background: linear-gradient(180deg,
-      var(--backcolor2) 15%,
-      var(--backcolor1) 85%);
+@keyframes parpadeoinsta {
+  0%, 100% {
+    opacity: 1; /* Totalmente visible */
+  }
+  50% {
+    opacity: 0; /* Invisible en el medio */
+  }
 }
 
+html {
+  color: var(--principal);
+  font-family: var(--font1);
+  background: var(--backcolor2)
+}
 
 .nav {
-  position: sticky;
+  position: relative;
   top: 0;
   background-color: var(--backcolor2); 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .container_nav {
-  width: 1240px;
+  width: 100%;
   margin: auto;
   display: flex;
   justify-content: space-between;
@@ -34,27 +40,23 @@ html {
 
 .logo {
   width: 15vw;
-  align-content: flex-start;
   display: flex;
   justify-content: flex-start;
 }
 
 .logo img {
   width: 50%;
-  
 }
 
 .nav div {
   display: flex;
   align-content: center;
-  
 }
 
 .menu {
   display: flex;
   justify-content: space-between;
 }
-
 
 nav div a {
   width: 140px;
@@ -84,7 +86,6 @@ a {
 .active {
   background-color: var(--backcolor1) !important;
   color: var(--secondary) !important;
-  
 }
 
 .actualización p {
@@ -93,39 +94,48 @@ a {
 
 main {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   min-height: 82vh;
 }
 
 .formatoprincipal {
   max-width: 1240px;
-  margin: auto;
+  margin: 20px;
+  align-items: center;
 }
 
 .principal {
   text-align: center;
   justify-content: space-around;
-  margin: 10px;
+  margin: 10px auto;
 }
 
 .principal_tarjeta {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  column-gap: 10px;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-auto-rows: 180px;
+  gap: 5px;
   justify-content: center;
-  margin: 20px auto;
-  
+  width: 80%;
+  margin: auto;
 }
 
 .tarjeta {
   border: var(--secondary) 0px solid;
   border-radius: 5px;
-  width: 35%;
+  width: 200px;
   color: black;
   background-color: var(--secondary);
   padding: 5px;
-  margin: 30px
+  margin: 30px;
+}
+
+.tarjeta p, .tarjeta h2 {
+  text-align: center;
+}
+
+.principal_tarjeta .tarjeta:first-child {
+  display: none;
 }
 
 .tarjeta:hover {
@@ -138,7 +148,6 @@ main {
   color: var(--secondary);
   width: 100%;
   background-color: var(--backcolor1);
-  /* height: 8vh; */
   display: flex;
   align-items: center;
 }
@@ -154,12 +163,77 @@ main {
 .footer-nombres {
   display: flex;
   flex-direction: column;
-  text-decoration: none;
   list-style-type: none;
 }
 
 .footer-nombres a {
   margin: 2% 0;
   color: var(--secondary);
+}
 
+
+/* punto de corte 720px */
+@media (max-width: 720px) {
+  .container_nav, .container_footer {
+    width: 100%;
+    padding: 0 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+  nav div a {
+    width: 100px;
+    height: 30px;
+    margin: 0 2vw;
+    font-size: 0.9rem;
+  }
+
+  .nav {
+    position: relative;
+    top: 0;
+    background-color: none; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: top 0.3s ease; 
+  }
+  
+  .nav-hidden {
+    top: -200px; 
+    
+  }
+
+  .menu {
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+  }
+
+  .menu a {
+    margin: 5px 0;
+    width: auto;
+  }
+
+  .principal_tarjeta {
+    grid-template-columns: 1fr 1fr;
+    width: 90%;
+
+    
+  }
+
+  .tarjeta {
+    width: 150px; /* Reduce el ancho de cada tarjeta */
+    margin: 10px; /* Reduce el margen entre tarjetas */
+    padding: 5px; /* Asegura el padding */
+  }
+
+  .tarjeta p, .tarjeta h2 {
+    font-size: 0.9rem; /* Reduce ligeramente el tamaño del texto */
+    text-align: center;
+  }
+
+
+  .container_footer div {
+    font-size: 14px;
+    text-align: center;
+  }
 }
