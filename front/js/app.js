@@ -59,7 +59,7 @@ function actualizarFecha(fecha) {
   let elementoFecha = document.getElementById("ultima_actualizacion");
   
   if (elementoFecha) {
-    elementoFecha.innerHTML = fechaFormateada;
+    elementoFecha.innerHTML ="Ultima actualizacion: " + fechaFormateada;
   } else {
     console.error("No se encontró el elemento con el id 'ultima_actualizacion'.");
   }
