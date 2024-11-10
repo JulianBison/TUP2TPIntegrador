@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, request
 from flask_cors import CORS  # Importa CORS
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
@@ -73,7 +73,7 @@ class Cotizacion:
         return f"El precio de compra es: {self.mostrarcompra()}, el precio de venta es: {self.mostrarventa()} y la fecha de actualizacion es {self.mostrarfecha()}"
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)   # Activa CORS en toda la aplicación
+CORS(app, supports_credentials=True, resources={r"/api/*": {"origins": "*"}}) # Activa CORS en toda la aplicación
 
 # Ruta del archivo JSON
 json_file_path = os.path.join(os.path.dirname(__file__), "cotizaciones.json")
@@ -188,19 +188,22 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-@app.route('/api/contacto', methods=['POST'])
-def contact():
-    data = requests.getjson()  # Recibe los datos JSON enviados desde el formulario
-    print("Datos recibidos:", data)  # Imprime los datos en la consola para verificar
+@app.route('/api/contacto/', methods=['POST', 'OPTIONS'])
+def contacto():
+    if request.method == 'OPTIONS':
+        # Responde a la solicitud preflight con un estado 200 y headers de CORS
+        response = app.response_class(status=200)
+        response.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:5500'
+        response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        return response
 
-    # Aquí podrías agregar lógica adicional, como enviar un correo con los datos del mensaje
+    # Procesa la solicitud POST aquí
+    data = request.get_json()
+    # Realiza el procesamiento que necesites con `data`
+    return jsonify({"status": "Contacto recibido", "data": data}), 200
 
-    # Envía una respuesta al cliente confirmando que el mensaje fue recibido
-    response = {
-        "status": "success",
-        "message": "Mensaje recibido correctamente"
-    }
-    return jsonify(response)  # Envía una respuesta JSON
+if __name__ == "__main__":
+    app.run(port=5000)
 
-#if name == '_main':
-    app.run(debug=True)
