@@ -109,7 +109,7 @@ def obtener_y_guardar_cotizaciones():
 # Función para obtener datos de la API y guardar en el archivo JSON
 def obtener_datos_api_y_guardar():
     try:
-        # Realiza la solicitud a la API
+        # Realiza la primer solicitud a la API para obtener los datos de todos los valores
         response = requests.get("https://dolarapi.com/v1/dolares")
         response.raise_for_status()
         listamonedas = []
@@ -119,7 +119,7 @@ def obtener_datos_api_y_guardar():
             moneda.cargarcotizacion(cotizacion)
             listamonedas.append(moneda)
 
-        # Realiza una segunda solicitud a la API para obtener los datos de dólares
+        # Realiza una segunda solicitud a la API para obtener los datos de cotizaciones empezando en 1 para no repetir dolar oficial
         response2 = requests.get("https://dolarapi.com/v1/cotizaciones")
         response2.raise_for_status()
         for cambio in response2.json()[1:]:

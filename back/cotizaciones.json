@@ -12,21 +12,21 @@
             "tipo": "Blue",
             "venta": 1135,
             "compra": 1115,
-            "fecha": "2024-11-09T12:00:00.000Z"
+            "fecha": "2024-11-10T17:59:00.000Z"
         },
         {
             "moneda": "USD",
             "tipo": "Bolsa",
             "venta": 1130.1,
             "compra": 1122.5,
-            "fecha": "2024-11-09T12:00:00.000Z"
+            "fecha": "2024-11-10T17:59:00.000Z"
         },
         {
             "moneda": "USD",
             "tipo": "Contado con liquidación",
             "venta": 1151.6,
             "compra": 1146.7,
-            "fecha": "2024-11-09T12:00:00.000Z"
+            "fecha": "2024-11-10T17:59:00.000Z"
         },
         {
             "moneda": "USD",
@@ -38,9 +38,9 @@
         {
             "moneda": "USD",
             "tipo": "Cripto",
-            "venta": 1148.39,
-            "compra": 1145.21,
-            "fecha": "2024-11-09T12:00:00.000Z"
+            "venta": 1152,
+            "compra": 1147.44,
+            "fecha": "2024-11-10T17:59:00.000Z"
         },
         {
             "moneda": "USD",
@@ -78,5 +78,5 @@
             "fecha": "2024-09-06T20:56:00.000Z"
         }
     ],
-    "ultima_actualizacion": "2024-11-09T12:08:14.829090"
+    "ultima_actualizacion": "2024-11-10T17:15:34.688650"
 }

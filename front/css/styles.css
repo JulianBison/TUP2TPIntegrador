@@ -18,7 +18,7 @@
 }
 
 html {
-  color: var(--secondary);
+  color: var(--principal);
   font-family: var(--font1);
   background: var(--backcolor2)
 }
