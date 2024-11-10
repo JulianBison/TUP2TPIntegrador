@@ -190,7 +190,7 @@ if __name__ == '__main__':
 
 @app.route('/api/contacto', methods=['POST'])
 def contact():
-    data = request.getjson()  # Recibe los datos JSON enviados desde el formulario
+    data = requests.getjson()  # Recibe los datos JSON enviados desde el formulario
     print("Datos recibidos:", data)  # Imprime los datos en la consola para verificar
 
     # Aquí podrías agregar lógica adicional, como enviar un correo con los datos del mensaje

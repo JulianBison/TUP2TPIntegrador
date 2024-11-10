@@ -99,8 +99,8 @@ main {
 }
 
 .formatoprincipal {
-  max-width: 1240px;
-  margin: 20px;
+  max-width: 100vw;
+  margin: 20px auto;
   align-items: center;
 }
 
@@ -169,6 +169,18 @@ main {
 .footer-nombres a {
   margin: 2% 0;
   color: var(--secondary);
+}
+
+#formularioContacto {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.label {
+  margin-top: 10px;
 }
 
 
