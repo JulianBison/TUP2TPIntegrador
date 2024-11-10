@@ -160,3 +160,20 @@ document.getElementById('DatosHistorico').addEventListener('submit', function(ev
     })
     .catch(error => console.error('Error en la petición:', error));
 });
+
+
+//funcion para esconder el menu al scrollear
+let prevScrollPos = window.scrollY;
+const nav = document.querySelector('.nav');
+
+window.onscroll = function() {
+  let currentScrollPos = window.scrollY;
+  
+  if (prevScrollPos > currentScrollPos) {
+    nav.classList.remove("nav-hidden");
+  } else {
+    nav.classList.add("nav-hidden");
+  }
+  
+  prevScrollPos = currentScrollPos;
+};
