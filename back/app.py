@@ -278,6 +278,9 @@ def cotizaciones_email():
 
     # Aquí puedes agregar el procesamiento que necesites con `data`, como guardar en una base de datos o enviar un correo
     # print(f"Contacto recibido: {data}")  # Ejemplo de procesamiento
+    cotizaciones=obtener_y_guardar_cotizaciones()
+    
+        
     mail_enviar(data['nombre'],data['apellido'],data['email'],obtener_y_guardar_cotizaciones())
     return jsonify({"status": "Contacto recibido", "data": data}), 200
 
