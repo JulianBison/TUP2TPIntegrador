@@ -256,14 +256,32 @@ def contacto():
         return jsonify({"error": "No se proporcionaron datos"}), 400
 
     # Aquí puedes agregar el procesamiento que necesites con `data`, como guardar en una base de datos o enviar un correo
-    print(f"Contacto recibido: {data}")  # Ejemplo de procesamiento
-    mail_enviar(data)
+    # print(f"Contacto recibido: {data}")  # Ejemplo de procesamiento
+    mail_enviar(data['nombre'],data['apellido'],'bisonjulian@gmail.com',data['mensaje'])
     return jsonify({"status": "Contacto recibido", "data": data}), 200
 
+@app.route('/api/cotizaciones/email', methods=['POST', 'OPTIONS'])
+def cotizaciones_email():
+    if request.method == 'OPTIONS':
+        # Responde a la solicitud preflight con un estado 200 y headers de CORS
+        response = app.response_class(status=200)
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        return response
 
-def mail_enviar(informacion_contacto):
-    cotizaciones=obtener_y_guardar_cotizaciones()
-    print(informacion_contacto)
+    # Procesa la solicitud POST aquí
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No se proporcionaron datos"}), 400
+
+    # Aquí puedes agregar el procesamiento que necesites con `data`, como guardar en una base de datos o enviar un correo
+    # print(f"Contacto recibido: {data}")  # Ejemplo de procesamiento
+    mail_enviar(data['nombre'],data['apellido'],data['email'],obtener_y_guardar_cotizaciones())
+    return jsonify({"status": "Contacto recibido", "data": data}), 200
+
+def mail_enviar(nombre,apellido,email,informacion_enviar):
     data = {
         'service_id': 'service_9lmfke1',
         'template_id': 'template_iqc45hy',
@@ -271,9 +289,9 @@ def mail_enviar(informacion_contacto):
         'accessToken': '_qDyYbn5_6AihShGrNmIs',
         'template_params': {
             'from_name': 'Pagina Cotizaciones',
-            'to_name': f'{informacion_contacto["nombre"]} {informacion_contacto["apellido"]}',
-            'to_mail':f'{informacion_contacto["email"]}',
-            'message': f'Cotizacion pedida {cotizaciones}'
+            'to_name': f'{nombre} {apellido}',
+            'to_mail':f'{email}',
+            'message': f'Cotizacion pedida {informacion_enviar}'
         }
     }
 
