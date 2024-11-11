@@ -93,8 +93,8 @@ def obtener_y_guardar_cotizaciones():
             return obtener_datos_api_y_guardar()
 
         # Si el archivo JSON existe, verifica la fecha de la última actualización
-        with open(ruta_cotizaciones_json, "r", encoding="utf-8") as f:
-            data = json.load(f)
+        with open(ruta_cotizaciones_json, "r", encoding="utf-8") as archivo_cotizacion:
+            data = json.load(archivo_cotizacion)
             ultima_actualizacion = datetime.fromisoformat(data.get("ultima_actualizacion", "1970-01-01T00:00:00"))
         
         # Si han pasado más de 5 minutos desde la última actualización, actualizamos los datos
@@ -134,9 +134,9 @@ def obtener_datos_api_y_guardar():
         
         
         # Guarda los datos en el archivo JSON con codificación UTF-8
-        with open(ruta_cotizaciones_json, "w", encoding="utf-8") as f:
+        with open(ruta_cotizaciones_json, "w", encoding="utf-8") as archivo_cotizacion:
             json.dump({"cotizaciones": cotizaciones, "ultima_actualizacion": datetime.now().isoformat()},
-                      f, ensure_ascii=False, indent=4)
+                      archivo_cotizacion, ensure_ascii=False, indent=4)
 
         return {"cotizaciones": cotizaciones, "ultima_actualizacion": datetime.now().isoformat()}
 
@@ -167,8 +167,8 @@ def obtener_datos_historico_api():
     })
     
     # Guardar en un archivo JSON
-    with open(ruta_historico_json, "w", encoding="utf-8") as archivo:
-        json.dump(historico, archivo, ensure_ascii=False, indent=4)
+    with open(ruta_historico_json, "w", encoding="utf-8") as archivo_historico:
+        json.dump(historico, archivo_historico, ensure_ascii=False, indent=4)
     
     return historico
 
@@ -236,8 +236,7 @@ def obtener_cotizaciones():
     data = obtener_y_guardar_cotizaciones()
     return jsonify(data)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
 
 
 @app.route('/api/contacto/', methods=['POST', 'OPTIONS'])
@@ -245,7 +244,7 @@ def contacto():
     if request.method == 'OPTIONS':
         # Responde a la solicitud preflight con un estado 200 y headers de CORS
         response = app.response_class(status=200)
-        response.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:5500'
+        response.headers['Access-Control-Allow-Origin'] = '*'
         response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
         response.headers['Access-Control-Allow-Credentials'] = 'true'
@@ -253,9 +252,15 @@ def contacto():
 
     # Procesa la solicitud POST aquí
     data = request.get_json()
-    # Realiza el procesamiento que necesites con `data`
+    if not data:
+        return jsonify({"error": "No se proporcionaron datos"}), 400
+
+    # Aquí puedes agregar el procesamiento que necesites con `data`, como guardar en una base de datos o enviar un correo
+    print(f"Contacto recibido: {data}")  # Ejemplo de procesamiento
+
     return jsonify({"status": "Contacto recibido", "data": data}), 200
 
-if __name__ == "__main__":
-    app.run(port=5000)
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
