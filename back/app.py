@@ -76,7 +76,9 @@ app = Flask(__name__)
 CORS(app, supports_credentials=True, resources={r"/api/*": {"origins": "*"}}) # Activa CORS en toda la aplicación
 
 # Ruta del archivo JSON
-json_file_path = os.path.join(os.path.dirname(__file__), "cotizaciones.json")
+ruta_cotizaciones_json = os.path.join(os.path.dirname(__file__), "cotizaciones.json")
+ruta_historico_json = os.path.join(os.path.dirname(__file__), "historico.json")
+
 
 # Ruta para servir el archivo JSON directamente
 @app.route('/static/cotizaciones.json')
@@ -87,11 +89,11 @@ def servir_json():
 def obtener_y_guardar_cotizaciones():
     try:
         # Verifica si el archivo JSON existe
-        if not os.path.exists(json_file_path):
+        if not os.path.exists(ruta_cotizaciones_json):
             return obtener_datos_api_y_guardar()
 
         # Si el archivo JSON existe, verifica la fecha de la última actualización
-        with open(json_file_path, "r", encoding="utf-8") as f:
+        with open(ruta_cotizaciones_json, "r", encoding="utf-8") as f:
             data = json.load(f)
             ultima_actualizacion = datetime.fromisoformat(data.get("ultima_actualizacion", "1970-01-01T00:00:00"))
         
@@ -132,7 +134,7 @@ def obtener_datos_api_y_guardar():
         
         
         # Guarda los datos en el archivo JSON con codificación UTF-8
-        with open(json_file_path, "w", encoding="utf-8") as f:
+        with open(ruta_cotizaciones_json, "w", encoding="utf-8") as f:
             json.dump({"cotizaciones": cotizaciones, "ultima_actualizacion": datetime.now().isoformat()},
                       f, ensure_ascii=False, indent=4)
 
@@ -142,41 +144,91 @@ def obtener_datos_api_y_guardar():
         print(f"Error al obtener los datos de la API: {e}")
         return {"error": "Error al obtener datos de la API"}, 500
 
+def obtener_datos_historico_api():
+    tipos_cambios = ['oficial', 'blue', 'bolsa', 'contadoconliqui', 'cripto', 'mayorista', 'solidario', 'turista']
+    historico = []
+    
+    for cambio in tipos_cambios:
+        url = f"https://api.argentinadatos.com/v1/cotizaciones/dolares/{cambio}"
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            datos = response.json()
+            historico.append({
+                "tipo": cambio,
+                "datos": datos
+            })
+        except requests.RequestException as e:
+            print(f"Error al obtener datos para {cambio}: {e}")
+    
+    # Agregar la última actualización
+    historico.append({
+        "ultima_actualizacion": datetime.now().isoformat()
+    })
+    
+    # Guardar en un archivo JSON
+    with open(ruta_historico_json, "w", encoding="utf-8") as archivo:
+        json.dump(historico, archivo, ensure_ascii=False, indent=4)
+    
+    return historico
+
+def revisar_historico():
+    try:
+        # Verificar si el archivo JSON existe
+        if not os.path.exists(ruta_historico_json):
+            return obtener_datos_historico_api()
+
+        # Leer el archivo JSON existente
+        with open(ruta_historico_json, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            ultima_actualizacion = datetime.fromisoformat(data[-1].get("ultima_actualizacion", "1970-01-01T00:00:00"))
+
+        # Actualizar si han pasado más de 24 horas
+        if datetime.now() - ultima_actualizacion > timedelta(hours=24):
+            return obtener_datos_historico_api()
+
+        return data
+
+    except Exception as e:
+        print(f"Error al manejar el archivo JSON: {e}")
+        return {"error": "Error al obtener datos"}, 500
+
+def buscar_historico_fecha_cambio(tipo_dolar, fecha_buscada):
+    historico = revisar_historico()
+    
+    # Buscar el tipo de cambio y fecha específica
+    for registro in historico:
+        if registro.get("tipo") == tipo_dolar:
+            for entrada in registro["datos"]:
+                if entrada.get("fecha") == fecha_buscada:
+                    return {
+                        "compra": entrada.get("compra"),
+                        "venta": entrada.get("venta"),
+                        "fecha": entrada.get("fecha")
+                    }
+    
+    # Si no se encuentra, retornar None
+    return None
+
 def obtener_historico(tipo_dolar, fecha_inicio, fecha_fin, valores):
     fechainicial = datetime.strptime(fecha_inicio, "%Y-%m-%d")
     fechafinal = datetime.strptime(fecha_fin, "%Y-%m-%d")
     delta_dias = (fechafinal - fechainicial) / (valores - 1)
     datosgrafica = []
-
+    
     for cont in range(valores):
         fecha_actual = fechainicial + delta_dias * cont
-        fecha_str = fecha_actual.strftime("%Y/%m/%d")
-        url = (f"https://api.argentinadatos.com/v1/cotizaciones/dolares/{tipo_dolar}/{fecha_str}")
-        try:
-            response = requests.get(url)
-            response.raise_for_status()
-            cotizacion_data = response.json()
-            
-            cotizacion = Cotizacion(
-                venta=cotizacion_data['venta'],
-                compra=cotizacion_data['compra'],
-                fecha=cotizacion_data['fecha']
-            )
-            
-            datosgrafica.append({
-                'fecha': cotizacion.fecha,
-                'venta': cotizacion.venta,
-                'compra': cotizacion.compra
-            })
-        except requests.RequestException as e:
-            print(f"Error fetching data for {fecha_str}: {e}")
-
+        fecha_str = fecha_actual.strftime("%Y-%m-%d")
+        datos_cambio = buscar_historico_fecha_cambio(tipo_dolar, fecha_str)
+        if datos_cambio:
+            datosgrafica.append(datos_cambio)
+    
     return jsonify(datosgrafica)
-
 
 @app.route('/api/historico/<tipo_dolar>/<fecha_inicio>/<fecha_fin>/<int:valores>')
 def api_historico(tipo_dolar, fecha_inicio, fecha_fin, valores):
     return obtener_historico(tipo_dolar, fecha_inicio, fecha_fin, valores)
+
 
 
 @app.route('/api/cotizaciones', methods=['GET'])
