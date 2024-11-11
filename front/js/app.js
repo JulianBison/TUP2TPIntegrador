@@ -65,7 +65,7 @@ function actualizarFecha(fecha) {
   }
 }
 if (window.location.href.includes("historico.html")){
-  document.getElementById('DatosHistorico').addEventListener('submit', function(event) {
+  document.getElementById('datosHistorico').addEventListener('submit', function(event) {
     event.preventDefault();
   
     // Obtener valores del formulario
@@ -160,7 +160,53 @@ if (window.location.href.includes("historico.html")){
       })
       .catch(error => console.error('Error en la petición:', error));
   });
-}
+
+  document.getElementById('envioHistoricoMostrar').addEventListener('click', function(event) {
+    document.getElementById('enviarHistorico').style.display = 'flex';
+  })
+
+  const formulario2 = document.getElementById('enviarHistorico');
+  formulario2.addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita que el formulario se envíe de manera tradicional
+    
+        const data = {
+            nombre: document.getElementById('nombre').value,
+            apellido: document.getElementById('apellido').value,
+            email: document.getElementById('email').value,
+            dolar: document.getElementById('dolar').value,
+            fechainicio: document.getElementById('fechainicio').value,
+            fechafin: document.getElementById('fechafin').value,
+            valores: parseInt(document.getElementById('valores').value)
+        };
+
+        fetch('http://127.0.0.1:5000/api/historico/email/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: "cors",
+            body: JSON.stringify(data) // Convierte los datos a formato JSON
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            alert('Contacto enviado exitosamente.');
+            formulario2.reset(); // Resetea el formulario después de enviar
+            formulario2.style.display='none';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Hubo un error al enviar el contacto.');
+        });
+  
+  
+    })
+};
 
 
 

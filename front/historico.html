@@ -32,8 +32,8 @@
     <div class="formatoprincipal">
       <div class="principal">
         <h1>Historico Cotización de monedas</h1>
-        <form id="DatosHistorico">
-          <label for="dolar">Elegi el tipo de dolar:</label>
+        <form id="datosHistorico">
+          <label for="dolar" class="label">Elegi el tipo de dolar:</label>
           <select id="dolar" name="dolar" required>
             <option value="oficial">Oficial</option>
             <option value="blue">Blue</option>
@@ -45,18 +45,34 @@
             <option value="turista">Turista</option>
           </select> 
           
-          <label for="fechainicio">Fecha:</label>
+          <label for="fechainicio" class="label">Fecha:</label>
           <input type="date" id="fechainicio" name="fechainicio" required>
 
-          <label for="fechafin">Fecha:</label>
+          <label for="fechafin" class="label">Fecha:</label>
           <input type="date" id="fechafin" name="fechafin" required>
   
-          <label for="valores">Cantidad de valores:</label>
+          <label for="valores" class="label">Cantidad de valores:</label>
           <input type="number" id="valores" name="valores" required>
   
-          <button type="submit">Armar Grafico</button>
+          <button type="submit" class="label">Armar Grafico</button>
         </form>
-        <h2>Gráfico de Datos con Chart.js</h2>
+
+        <button class="label" id="envioHistoricoMostrar">Enviar historico por email</button>
+
+        <form id="enviarHistorico">
+          <label class="label" for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required>
+  
+          <label class="label" for="apellido">Apellido:</label>
+          <input type="text" id="apellido" name="apellido" required>
+  
+          <label class="label" for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+  
+          <button class="label" type="submit">Enviar</button>
+        </form>
+
+        <h2 class="tituloGrafico">Gráfico de Datos con Chart.js</h2>
         <canvas id="Grafico" width="400" height="200"></canvas>
       </div>
   </main>

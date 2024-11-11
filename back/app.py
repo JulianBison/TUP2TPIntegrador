@@ -225,6 +225,27 @@ def obtener_historico(tipo_dolar, fecha_inicio, fecha_fin, valores):
     
     return jsonify(datosgrafica)
 
+def formatear_datos_historico_a_mail(tipo_dolar, fecha_inicio, fecha_fin, valores):
+    fechainicial = datetime.strptime(fecha_inicio, "%Y-%m-%d")
+    fechafinal = datetime.strptime(fecha_fin, "%Y-%m-%d")
+    delta_dias = (fechafinal - fechainicial) / (valores - 1)
+    datos_historicos = []
+    
+    for cont in range(valores):
+        fecha_actual = fechainicial + delta_dias * cont
+        fecha_str = fecha_actual.strftime("%Y-%m-%d")
+        datos_cambio = buscar_historico_fecha_cambio(tipo_dolar, fecha_str)
+        if datos_cambio:
+            datos_historicos.append(datos_cambio)
+    # Comenzamos el HTML para la tabla
+    mail = f'Cotizacion para el Dolar {tipo_dolar}\n'
+    mail += f"{'Fecha':<20}  {'Compra':<10}  {'Venta':<10}\n"
+    mail += ("-" * 40+'\n')
+    # Llenamos cada fila con los datos del JSON
+    for dato in datos_historicos:
+        mail+=f"{dato['fecha']:<20}  {dato['compra']:<10}  {dato['venta']:<10}\n"
+    return mail
+
 @app.route('/api/historico/<tipo_dolar>/<fecha_inicio>/<fecha_fin>/<int:valores>')
 def api_historico(tipo_dolar, fecha_inicio, fecha_fin, valores):
     return obtener_historico(tipo_dolar, fecha_inicio, fecha_fin, valores)
@@ -283,6 +304,30 @@ def cotizaciones_email():
         
     mail_enviar(data['nombre'],data['apellido'],data['email'],obtener_y_guardar_cotizaciones())
     return jsonify({"status": "Contacto recibido", "data": data}), 200
+
+@app.route('/api/historico/email/', methods=['POST', 'OPTIONS'])
+def historico_email():
+    if request.method == 'OPTIONS':
+        # Responde a la solicitud preflight con un estado 200 y headers de CORS
+        response = app.response_class(status=200)
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        return response
+
+    # Procesa la solicitud POST aquí
+    informacion = request.get_json()
+    if not informacion:
+        return jsonify({"error": "No se proporcionaron datos"}), 400
+
+    # Aquí puedes agregar el procesamiento que necesites con `data`, como guardar en una base de datos o enviar un correo
+    historico=formatear_datos_historico_a_mail(informacion['dolar'],informacion['fechainicio'],informacion['fechafin'],informacion['valores'])
+    print(historico)
+    mail_enviar(informacion['nombre'],informacion['apellido'],informacion['email'],historico)
+    return jsonify({"status": "Contacto recibido", "data": informacion}), 200
+
+
 
 def mail_enviar(nombre,apellido,email,informacion_enviar):
     data = {

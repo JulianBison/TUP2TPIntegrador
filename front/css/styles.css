@@ -105,6 +105,7 @@ main {
 }
 
 .principal {
+  width: 80vw;
   text-align: center;
   justify-content: space-around;
   margin: 10px auto;
@@ -179,11 +180,29 @@ main {
   align-items: center;
 }
 
+#datosHistorico{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#enviarHistorico{
+  display: none;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .label {
   margin-top: 10px;
 }
 
-
+.tituloGrafico{
+  margin-top: 10px;
+}
 /* punto de corte 720px */
 @media (max-width: 720px) {
   .container_nav, .container_footer {
