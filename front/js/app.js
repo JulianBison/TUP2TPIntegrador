@@ -208,7 +208,10 @@ if (window.location.href.includes("historico.html")){
     })
 };
 
-
+function toggleMenu() {
+  const menuResponsive = document.getElementById('menu_responsive');
+  menuResponsive.classList.toggle('mostrarmenu');
+}
 
 //funcion para esconder el menu al scrollear
 let prevScrollPos = window.scrollY;

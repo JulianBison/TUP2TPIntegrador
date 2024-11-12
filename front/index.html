@@ -7,7 +7,6 @@
   <!-- icon -->
   <link rel="icon" type="image/png" href="../front/images/ilustracion-signo-dolar.png">
   <!-- css -->
-  <link rel="stylesheet" href="../front/css/reset.css">
   <link rel="stylesheet" href="../front/css/styles.css">
   <!-- fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,12 +24,22 @@
       <div class="logo">
         <img src="./images/ilustracion-signo-dolar.png" alt="logo dolar">
       </div>
-      <div class="menu">
+      <div class="menu" id="menu">
         <a class="active" href="../front/index.html">Home</a>
         <a href="../front/historico.html">Histórico</a>
         <a href="../front/contacto.html">Contacto</a>
       </div>
-      <div class="actualización">
+      <div class="hamburguesa" id="hamburguesa" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="menu_responsive" id="menu_responsive">
+        <a href="../front/index.html">Home</a>
+        <a href="../front/historico.html">Histórico</a>
+        <a href="../front/contacto.html">Contacto</a>
+      </div>
+      <div class="actualización" id="actualizacion">
         <p>
           <span id="ultima_actualizacion">Ultima actualizacion : No disponible</span>
         </p>
@@ -39,6 +48,7 @@
   </nav>
 
   <main>
+    
     <div class="formatoprincipal">
       <div class="principal">
         <h1>Cotización actuales de monedas</h1>

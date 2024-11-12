@@ -3,30 +3,30 @@
         {
             "moneda": "USD",
             "tipo": "Oficial",
-            "venta": 1017.5,
-            "compra": 977.5,
-            "fecha": "2024-11-11T15:03:00.000Z"
+            "venta": 1018,
+            "compra": 978,
+            "fecha": "2024-11-12T09:53:00.000Z"
         },
         {
             "moneda": "USD",
             "tipo": "Blue",
             "venta": 1135,
             "compra": 1115,
-            "fecha": "2024-11-11T20:57:00.000Z"
+            "fecha": "2024-11-12T12:59:00.000Z"
         },
         {
             "moneda": "USD",
             "tipo": "Bolsa",
             "venta": 1130.5,
             "compra": 1129.3,
-            "fecha": "2024-11-11T20:57:00.000Z"
+            "fecha": "2024-11-12T12:59:00.000Z"
         },
         {
             "moneda": "USD",
             "tipo": "Contado con liquidación",
             "venta": 1151.6,
             "compra": 1146.7,
-            "fecha": "2024-11-11T20:57:00.000Z"
+            "fecha": "2024-11-12T12:59:00.000Z"
         },
         {
             "moneda": "USD",
@@ -38,16 +38,16 @@
         {
             "moneda": "USD",
             "tipo": "Cripto",
-            "venta": 1154.7,
-            "compra": 1152,
-            "fecha": "2024-11-11T20:57:00.000Z"
+            "venta": 1156.1,
+            "compra": 1151.3,
+            "fecha": "2024-11-12T12:59:00.000Z"
         },
         {
             "moneda": "USD",
             "tipo": "Tarjeta",
-            "venta": 1628,
-            "compra": 1564,
-            "fecha": "2024-11-11T15:03:00.000Z"
+            "venta": 1628.8,
+            "compra": 1564.8,
+            "fecha": "2024-11-12T09:53:00.000Z"
         },
         {
             "moneda": "EUR",
@@ -78,5 +78,5 @@
             "fecha": "2024-09-06T20:56:00.000Z"
         }
     ],
-    "ultima_actualizacion": "2024-11-11T19:17:33.909685"
+    "ultima_actualizacion": "2024-11-12T11:15:54.825607"
 }

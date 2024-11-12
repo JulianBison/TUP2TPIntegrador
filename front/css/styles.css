@@ -1,4 +1,4 @@
-/* CSS para dispositivos grandes (escritorio) */
+/* Variables de color y fuente */
 :root {
   --principal: #081c15;
   --secondary2: #2d6a4f;
@@ -8,21 +8,65 @@
   --backcolor3: rgb(37, 67, 54);
   --font1: "Raleway", sans-serif;
 }
-@keyframes parpadeoinsta {
-  0%, 100% {
-    opacity: 1; /* Totalmente visible */
-  }
-  50% {
-    opacity: 0; /* Invisible en el medio */
-  }
+
+/* Reset CSS */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Estilos generales */
 html {
   color: var(--principal);
   font-family: var(--font1);
-  background: var(--backcolor2)
+  background: var(--backcolor2);
 }
 
+/* Animación de parpadeo */
+@keyframes parpadeoinsta {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Barra de navegación */
 .nav {
   position: relative;
   top: 0;
@@ -31,7 +75,7 @@ html {
 }
 
 .container_nav {
-  width: 100%;
+  width: 80%;
   margin: auto;
   display: flex;
   justify-content: space-between;
@@ -76,10 +120,48 @@ nav div a {
   scale: 105%;
   transition: ease-in-out 0.07s;
 }
+#hamburguesa {
+  display: none; /* Oculto en pantallas grandes, visible en pequeñas */
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+#hamburguesa span {
+  width: 25px;
+  height: 3px;
+  background-color: var(--principal);
+  border-radius: 2px;
+}
+#menu_responsive {
+  display: none;
+  margin: 10px;
+  flex-direction: column;
+  background-color: var(--backcolor2);
+  width: 100%;
+  gap: 5px;
+  text-align: center;
+  align-items: center;
+}
+
+#menu_responsive a {
+  padding: 10px;
+  color: var(--principal);
+  text-decoration: none;
+}
+
+#menu_responsive a:hover {
+  background-color: var(--backcolor2);
+}
+
+#menu_responsive.mostrarmenu {
+  display: flex;
+  position: relative;
+}
 
 a {
   text-decoration: none;
-  list-style-type: none;
   color: var(--backcolor3);
 }
 
@@ -107,13 +189,12 @@ main {
 .principal {
   width: 80vw;
   text-align: center;
-  justify-content: space-around;
   margin: 10px auto;
 }
 
 .principal_tarjeta {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: 180px;
   gap: 5px;
   justify-content: center;
@@ -145,6 +226,7 @@ main {
   transition: ease-in-out 0.15s;
 }
 
+/* Footer */
 .footer {
   color: var(--secondary);
   width: 100%;
@@ -164,7 +246,6 @@ main {
 .footer-nombres {
   display: flex;
   flex-direction: column;
-  list-style-type: none;
 }
 
 .footer-nombres a {
@@ -172,47 +253,39 @@ main {
   color: var(--secondary);
 }
 
-#formularioContacto {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+
+/* Media Queries */
+@media (max-width: 1024px) {
+  .principal_tarjeta {
+    grid-template-columns: repeat(3, 1fr);
+    width: 90%;
+  }
 }
 
-#datosHistorico{
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#enviarHistorico{
-  display: none;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.label {
-  margin-top: 10px;
-}
-
-.tituloGrafico{
-  margin-top: 10px;
-}
-/* punto de corte 720px */
 @media (max-width: 720px) {
   .container_nav, .container_footer {
-    width: 100%;
+    width: 90%;
     padding: 0 20px;
     flex-direction: column;
     align-items: center;
   }
 
-
+  .logo {
+    width: 50vw;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .logo img {
+    width: 50%;
+  }
+  #hamburguesa {
+    display: flex;
+  }
+  #menu_responsive.mostrarmenu {
+    display: flex;
+  }
   nav div a {
     width: 100px;
     height: 30px;
@@ -221,50 +294,33 @@ main {
   }
 
   .nav {
-    position: relative;
-    top: 0;
-    background-color: none; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: transparent; 
     transition: top 0.3s ease; 
   }
   
-  .nav-hidden {
-    top: -200px; 
-    
-  }
-
-  .menu {
-    flex-direction: column;
-    width: 100%;
-    text-align: center;
-  }
-
-  .menu a {
-    margin: 5px 0;
-    width: auto;
+  #menu {
+    display: none;
   }
 
   .principal_tarjeta {
     grid-template-columns: 1fr 1fr;
     width: 90%;
-
-    
   }
 
   .tarjeta {
-    width: 150px; /* Reduce el ancho de cada tarjeta */
-    margin: 10px; /* Reduce el margen entre tarjetas */
-    padding: 5px; /* Asegura el padding */
+    width: 150px;
+    margin: 10px;
+    padding: 5px;
   }
 
   .tarjeta p, .tarjeta h2 {
-    font-size: 0.9rem; /* Reduce ligeramente el tamaño del texto */
-    text-align: center;
+    font-size: 0.9rem;
   }
-
 
   .container_footer div {
     font-size: 14px;
     text-align: center;
   }
+
+  
 }
