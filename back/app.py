@@ -239,11 +239,11 @@ def formatear_datos_historico_a_mail(tipo_dolar, fecha_inicio, fecha_fin, valore
             datos_historicos.append(datos_cambio)
     # Comenzamos el HTML para la tabla
     mail = f'Cotizacion para el Dolar {tipo_dolar}\n'
-    mail += f"{'Fecha':<20}  {'Compra':<10}  {'Venta':<10}\n"
+    mail += f"{'Fecha':<20} | {'Compra':<10} | {'Venta':<10}\n"
     mail += ("-" * 40+'\n')
     # Llenamos cada fila con los datos del JSON
     for dato in datos_historicos:
-        mail+=f"{dato['fecha']:<20}  {dato['compra']:<10}  {dato['venta']:<10}\n"
+        mail+=f"{dato['fecha']:<20} | {dato['compra']:<10} | {dato['venta']:<10}\n"
     return mail
 
 @app.route('/api/historico/<tipo_dolar>/<fecha_inicio>/<fecha_fin>/<int:valores>')
@@ -275,12 +275,13 @@ def contacto():
     data = request.get_json()
     if not data:
         return jsonify({"error": "No se proporcionaron datos"}), 400
-    
+    mensaje_enviar=f'{data['mensaje']} \n'
+    mensaje_enviar+=f'Responder al mail:{data['email']}'
     #Aca pusimos un mail nuestro como si fuera el mail de contacto para recibir la informacion de contacto de la pagina web
-    mail_enviar(data['nombre'],data['apellido'],'bisonjulian@gmail.com',data['mensaje'],data['email'])
+    mail_enviar(data['nombre'],data['apellido'],'bisonjulian@gmail.com',mensaje_enviar,data['email'])
     return jsonify({"status": "Contacto recibido", "data": data}), 200
 
-@app.route('/api/cotizaciones/email', methods=['POST', 'OPTIONS'])
+@app.route('/api/cotizaciones/email/', methods=['POST', 'OPTIONS'])
 def cotizaciones_email():
     if request.method == 'OPTIONS':
         # Responde a la solicitud preflight con un estado 200 y headers de CORS
@@ -298,10 +299,13 @@ def cotizaciones_email():
 
     # print(f"Contacto recibido: {data}")  # Ejemplo de procesamiento
     cotizaciones=obtener_y_guardar_cotizaciones()
-    
+    cotizaciones_enviar=f'Cotizaciones actuales: \n'
+    cotizaciones_enviar+=f'{'Moneda':<15} | {'Tipo':<15} | {'Compra':<5} | {'Venta':<5} | {'Fecha':<25}\n'
+    for cotizacion in cotizaciones['cotizaciones']:
+        cotizaciones_enviar+=f'{cotizacion['moneda']} | {cotizacion['tipo']} | {cotizacion['compra']} | {cotizacion['venta']} | {cotizacion['fecha']}\n'
         
-    mail_enviar(data['nombre'],data['apellido'],data['email'],obtener_y_guardar_cotizaciones())
-    return jsonify({"status": "Contacto recibido", "data": data}), 200
+    mail_enviar(data['nombre'],data['apellido'],data['email'],cotizaciones_enviar)
+    return jsonify({"status": "Cotizaciones recibias", "data": data}), 200
 
 @app.route('/api/historico/email/', methods=['POST', 'OPTIONS'])
 def historico_email():
@@ -322,7 +326,7 @@ def historico_email():
     historico=formatear_datos_historico_a_mail(informacion['dolar'],informacion['fechainicio'],informacion['fechafin'],informacion['valores'])
     #print(historico)
     mail_enviar(informacion['nombre'],informacion['apellido'],informacion['email'],historico)
-    return jsonify({"status": "Contacto recibido", "data": informacion}), 200
+    return jsonify({"status": "Historico recibido", "data": informacion}), 200
 
 
 #Funcion funcion para enviar la informacion necesaria por mail
@@ -337,7 +341,7 @@ def mail_enviar(nombre,apellido,email,informacion_enviar,reply='bisonjulian@gmai
             'to_name': f'{nombre} {apellido}',
             'to_mail':f'{email}',
             'message': f'{informacion_enviar}',
-            'to_reply':f'{reply}'
+            'reply_to':f'{reply}'
         }
     }
 

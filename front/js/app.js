@@ -63,7 +63,53 @@ function actualizarFecha(fecha) {
   } else {
     console.error("No se encontró el elemento con el id 'ultima_actualizacion'.");
   }
+
+  document.getElementById('envioCotizacionesMostrar').addEventListener('click', function(event) {
+    document.getElementById('enviarCotizaciones').style.display = 'flex';
+  })
+
+  const formulario3 = document.getElementById('enviarCotizaciones');
+  formulario3.addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita que el formulario se envíe de manera tradicional
+    
+        const data = {
+            nombre: document.getElementById('nombre').value,
+            apellido: document.getElementById('apellido').value,
+            email: document.getElementById('email').value,
+        };
+
+        fetch('http://127.0.0.1:5000/api/cotizaciones/email/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: "cors",
+            body: JSON.stringify(data) // Convierte los datos a formato JSON
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            alert('Cotizaciones enviadas exitosamente.');
+            formulario3.reset(); // Resetea el formulario después de enviar
+            formulario3.style.display='none';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Hubo un error al enviar las cotizaciones.');
+        });
+  
+  
+    })
+
+
 }
+
+
 if (window.location.href.includes("historico.html")){
   document.getElementById('datosHistorico').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -195,13 +241,13 @@ if (window.location.href.includes("historico.html")){
         })
         .then(data => {
             console.log('Success:', data);
-            alert('Contacto enviado exitosamente.');
+            alert('Historico enviado exitosamente.');
             formulario2.reset(); // Resetea el formulario después de enviar
             formulario2.style.display='none';
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('Hubo un error al enviar el contacto.');
+            alert('Hubo un error al enviar el historico.');
         });
   
   

@@ -256,6 +256,9 @@ main {
 #enviarHistorico{
   display: none;
 }
+#enviarCotizaciones{
+  display: none;
+}
 
 /* Media Queries */
 @media (max-width: 1024px) {
