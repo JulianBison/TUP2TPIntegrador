@@ -189,16 +189,15 @@ form {
   max-width: 600px;
   margin: 0 auto;
 }
-#enviarCotizaciones{
+#enviarCotizaciones,#enviarHistorico{
   display: none;
   flex-direction: column;
   gap: 5px;
 }
-#enviarHistorico{
-  display: none;
-  flex-direction: column;
-  gap: 5px;
+#envioCotizacionesMostrar,#envioHistoricoMostrar{
+  width: 25%;
 }
+
 input, textarea, button {
   width: 100%;
   padding: 15px;
