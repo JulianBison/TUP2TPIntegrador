@@ -256,10 +256,22 @@ main {
 #enviarHistorico{
   display: none;
 }
+
 #enviarCotizaciones{
   display: none;
 }
 
+.formularios{
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.label{
+  margin: 5px;
+}
 /* Media Queries */
 @media (max-width: 1024px) {
   .principal_tarjeta {
