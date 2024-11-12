@@ -226,25 +226,43 @@ def obtener_historico(tipo_dolar, fecha_inicio, fecha_fin, valores):
     return jsonify(datosgrafica)
 
 def formatear_datos_historico_a_mail(tipo_dolar, fecha_inicio, fecha_fin, valores):
+    # Parse start and end dates, calculate intervals
     fechainicial = datetime.strptime(fecha_inicio, "%Y-%m-%d")
     fechafinal = datetime.strptime(fecha_fin, "%Y-%m-%d")
     delta_dias = (fechafinal - fechainicial) / (valores - 1)
-    datos_historicos = []
     
+    # Collect historical data
+    datos_historicos = []
     for cont in range(valores):
         fecha_actual = fechainicial + delta_dias * cont
         fecha_str = fecha_actual.strftime("%Y-%m-%d")
         datos_cambio = buscar_historico_fecha_cambio(tipo_dolar, fecha_str)
         if datos_cambio:
             datos_historicos.append(datos_cambio)
-    # Comenzamos el HTML para la tabla
-    mail = f'Cotizacion para el Dolar {tipo_dolar}\n'
-    mail += f"{'Fecha':<20}  {'Compra':<10}  {'Venta':<10}\n"
-    mail += ("-" * 40+'\n')
-    # Llenamos cada fila con los datos del JSON
+    
+    # Build HTML without tables
+    message_html = f"""
+    <div style="font-family: Arial, sans-serif; color: #333;">
+        <h3 style="color: #4CAF50;">Cotización para el Dólar {tipo_dolar}</h3>
+        <p>Fecha de inicio: {fecha_inicio}</p>
+        <p>Fecha de fin: {fecha_fin}</p>
+        <div style="margin-top: 20px;">
+    """
+    
+    # Append each date and values as styled paragraphs
     for dato in datos_historicos:
-        mail+=f"{dato['fecha']:<20}  {dato['compra']:<10}  {dato['venta']:<10}\n"
-    return mail
+        message_html += f"""
+            <div style="margin-bottom: 10px;">
+                <strong>Fecha:</strong> {dato['fecha']}<br>
+                <strong>Compra:</strong> {dato['compra']}<br>
+                <strong>Venta:</strong> {dato['venta']}
+            </div>
+        """
+    
+    # Close div
+    message_html += "</div></div>"
+    
+    return message_html
 
 @app.route('/api/historico/<tipo_dolar>/<fecha_inicio>/<fecha_fin>/<int:valores>')
 def api_historico(tipo_dolar, fecha_inicio, fecha_fin, valores):
@@ -277,7 +295,7 @@ def contacto():
         return jsonify({"error": "No se proporcionaron datos"}), 400
     
     #Aca pusimos un mail nuestro como si fuera el mail de contacto para recibir la informacion de contacto de la pagina web
-    mail_enviar(data['nombre'],data['apellido'],'bisonjulian@gmail.com',data['mensaje'],data['email'])
+    mail_enviar(data['nombre'],data['apellido'],'ezequiel_natale@yahoo.com.ar',data['mensaje'],data['email'])
     return jsonify({"status": "Contacto recibido", "data": data}), 200
 
 @app.route('/api/cotizaciones/email', methods=['POST', 'OPTIONS'])
@@ -326,7 +344,7 @@ def historico_email():
 
 
 #Funcion funcion para enviar la informacion necesaria por mail
-def mail_enviar(nombre,apellido,email,informacion_enviar,reply='bisonjulian@gmail.com'):
+def mail_enviar(nombre, apellido, email, informacion_enviar, reply='ezequiel_natale@yahoo.com.ar'):
     data = {
         'service_id': 'service_9lmfke1',
         'template_id': 'template_iqc45hy',
@@ -335,9 +353,9 @@ def mail_enviar(nombre,apellido,email,informacion_enviar,reply='bisonjulian@gmai
         'template_params': {
             'from_name': 'Pagina Cotizaciones',
             'to_name': f'{nombre} {apellido}',
-            'to_mail':f'{email}',
-            'message': f'{informacion_enviar}',
-            'to_reply':f'{reply}'
+            'to_mail': f'{email}',
+            'message': informacion_enviar,  # Pass the HTML content here
+            'to_reply': f'{reply}'
         }
     }
 
@@ -346,7 +364,7 @@ def mail_enviar(nombre,apellido,email,informacion_enviar,reply='bisonjulian@gmai
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
         'Accept': 'application/json, text/javascript, */*; q=0.01',
         'Accept-Language': 'en-US,en;q=0.9',
-        'Origin': 'https://your-website.com',  
+        'Origin': 'https://your-website.com',
         'Referer': 'https://your-website.com/'
     }
 

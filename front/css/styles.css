@@ -1,100 +1,49 @@
-/* Variables de color y fuente */
 :root {
-  --principal: #081c15;
-  --secondary2: #2d6a4f;
-  --secondary: #ddd8c4;
-  --backcolor1: #40916c;
-  --backcolor2: #95d5b2;
-  --backcolor3: rgb(37, 67, 54);
-  --font1: "Raleway", sans-serif;
+  --principal: #34495e; /* Color más neutral para el texto */
+  --secondary: #f39c12; /* Color cálido, para resaltar botones o links */
+  --background-light: #ecf0f1; /* Color claro para el fondo */
+  --background-dark: #2c3e50; /* Color oscuro para contraste */
+  --font1: "Montserrat", sans-serif;
 }
 
 /* Reset CSS */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html, body {
   margin: 0;
   padding: 0;
-  border: 0;
   font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-
-body {
-  line-height: 1;
-}
-
-ol, ul {
-  list-style: none;
-}
-
-blockquote, q {
-  quotes: none;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* Estilos generales */
-html {
-  color: var(--principal);
   font-family: var(--font1);
-  background: var(--backcolor2);
-}
-
-/* Animación de parpadeo */
-@keyframes parpadeoinsta {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  color: var(--principal);
+  background-color: var(--background-light);
 }
 
 /* Barra de navegación */
 .nav {
   position: relative;
   top: 0;
-  background-color: var(--backcolor2); 
+  background-color: var(--background-dark);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .container_nav {
   width: 80%;
-  margin: auto;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 20px 0;
 }
 
 .logo {
   width: 15vw;
-  display: flex;
-  justify-content: flex-start;
 }
 
 .logo img {
-  width: 50%;
+  width: 60%;
+  max-width: 200px; /* Limitando tamaño para evitar que se desborde */
 }
 
 .nav div {
   display: flex;
-  align-content: center;
 }
 
 .menu {
@@ -103,141 +52,78 @@ html {
 }
 
 nav div a {
-  width: 140px;
-  height: 35px;
-  margin: 0 4vh;
+  padding: 10px 20px;
   background-color: var(--secondary);
+  color: white;
   font-weight: bold;
-  display: flex;
-  border-radius: 10px;
-  justify-content: center;
-  align-items: center;
+  border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 10px;
+  text-align: center;
 }
 
 .nav div a:hover {
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-  scale: 105%;
-  transition: ease-in-out 0.07s;
-}
-#hamburguesa {
-  display: none; /* Oculto en pantallas grandes, visible en pequeñas */
-  cursor: pointer;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 10px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
 }
 
-#hamburguesa span {
-  width: 25px;
-  height: 3px;
-  background-color: var(--principal);
-  border-radius: 2px;
-}
-#menu_responsive {
-  display: none;
-  margin: 10px;
-  flex-direction: column;
-  background-color: var(--backcolor2);
-  width: 100%;
-  gap: 5px;
-  text-align: center;
-  align-items: center;
-}
-
-#menu_responsive a {
-  padding: 10px;
-  color: var(--principal);
-  text-decoration: none;
-}
-
-#menu_responsive a:hover {
-  background-color: var(--backcolor2);
-}
-
-#menu_responsive.mostrarmenu {
-  display: flex;
-  position: relative;
-}
-
-a {
-  text-decoration: none;
-  color: var(--backcolor3);
-}
-
-.active {
-  background-color: var(--backcolor1) !important;
-  color: var(--secondary) !important;
-}
-
-.actualización p {
-  font-weight: bold;
-}
-
+/* Main content layout */
 main {
   display: flex;
-  flex-direction: row;
-  min-height: 82vh;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 40px 0;
 }
 
 .formatoprincipal {
-  max-width: 100vw;
-  margin: 20px auto;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
 .principal {
-  width: 80vw;
   text-align: center;
-  margin: 10px auto;
+  margin: 20px 0;
 }
 
 .principal_tarjeta {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 180px;
-  gap: 5px;
-  justify-content: center;
-  width: 80%;
-  margin: auto;
+  gap: 20px;
+  width: 100%;
+  padding: 10px;
 }
 
 .tarjeta {
-  border: var(--secondary) 0px solid;
-  border-radius: 5px;
-  width: 200px;
-  color: black;
-  background-color: var(--secondary);
-  padding: 5px;
-  margin: 30px;
-}
-
-.tarjeta p, .tarjeta h2 {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-.principal_tarjeta .tarjeta:first-child {
-  display: none;
-}
-
 .tarjeta:hover {
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-  scale: 105%;
-  transition: ease-in-out 0.15s;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Footer */
-.footer {
-  color: var(--secondary);
-  width: 100%;
-  background-color: var(--backcolor1);
-  display: flex;
-  align-items: center;
+footer {
+  background-color: var(--background-dark);
+  color: white;
+  padding: 20px 0;
 }
 
 .container_footer {
-  width: 1240px;
-  margin: auto;
+  width: 80%;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -249,80 +135,157 @@ main {
 }
 
 .footer-nombres a {
-  margin: 2% 0;
   color: var(--secondary);
+  margin: 10px 0;
 }
 
-#enviarHistorico{
-  display: none;
+/* Formulario estilos */
+form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+input, textarea, button {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+button {
+  background-color: var(--secondary);
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #e67e22;
 }
 
 /* Media Queries */
 @media (max-width: 1024px) {
   .principal_tarjeta {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .container_nav {
     width: 90%;
+  }
+
+  .logo {
+    width: 30vw;
+  }
+
+  nav div a {
+    width: 100px;
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 720px) {
   .container_nav, .container_footer {
-    width: 90%;
-    padding: 0 20px;
     flex-direction: column;
+    width: 90%;
+    padding: 10px;
     align-items: center;
   }
 
-  .logo {
-    width: 50vw;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .logo img {
-    width: 50%;
-  }
-  #hamburguesa {
-    display: flex;
-  }
-  #menu_responsive.mostrarmenu {
-    display: flex;
-  }
-  nav div a {
-    width: 100px;
-    height: 30px;
-    margin: 0 2vw;
-    font-size: 0.9rem;
-  }
-
-  .nav {
-    background-color: transparent; 
-    transition: top 0.3s ease; 
-  }
-  
-  #menu {
-    display: none;
+  .menu {
+    flex-direction: column;
   }
 
   .principal_tarjeta {
-    grid-template-columns: 1fr 1fr;
-    width: 90%;
+    grid-template-columns: 1fr;
   }
 
   .tarjeta {
-    width: 150px;
-    margin: 10px;
-    padding: 5px;
+    width: 90%;
+  }
+}
+
+.principal_tarjeta .tarjeta:first-child {
+  display: none;
+}
+
+/* Hide the regular menu by default on small screens */
+#menu {
+  display: none;  /* Hide the regular menu initially */
+}
+
+/* Show the hamburger icon only on smaller screens */
+#hamburguesa {
+  display: none;  /* Hide hamburger on large screens */
+}
+
+/* Show the hamburger menu on small screens */
+@media (max-width: 720px) {
+  #hamburguesa {
+    display: flex;  /* Show the hamburger icon */
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
   }
 
-  .tarjeta p, .tarjeta h2 {
-    font-size: 0.9rem;
+  #hamburguesa span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--principal);
+    border-radius: 2px;
   }
 
-  .container_footer div {
-    font-size: 14px;
+  /* Hide the regular navigation menu on mobile */
+  .menu {
+    display: none;
+  }
+
+  /* Show the menu when toggled */
+  #menu_responsive {
+    display: none;
+    flex-direction: column;
+    background-color: var(--backcolor2);
+    width: 100%;
+    gap: 10px;
+    padding: 20px;
     text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
-  
+  /* Show menu when hamburger icon is clicked */
+  #menu_responsive.mostrarmenu {
+    display: flex;
+  }
+
+  /* Style for responsive menu items */
+  #menu_responsive a {
+    padding: 10px;
+    color: var(--principal);
+    text-decoration: none;
+    font-size: 1.2rem;
+  }
+
+  #menu_responsive a:hover {
+    background-color: var(--backcolor3);
+  }
+}
+
+/* On larger screens, show the regular menu and hide the hamburger */
+@media (min-width: 721px) {
+  .menu {
+    display: flex; /* Show regular menu */
+    gap: 10px;
+  }
+
+  #hamburguesa {
+    display: none;  /* Hide hamburger icon */
+  }
 }
