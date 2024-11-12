@@ -52,7 +52,9 @@ html, body {
 .nav div {
   display: flex;
 }
-
+#ultima_actualizacion{
+  color:white
+}
 .menu {
   display: flex;
   justify-content: space-between;
@@ -67,12 +69,16 @@ nav div a {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 0 10px;
   text-align: center;
+  text-decoration: none;
 }
 
 .nav div a:hover {
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
   transform: scale(1.05);
   transition: transform 0.3s ease-in-out;
+}
+.active{
+  background-color: var(--secondary2);
 }
 
 #hamburguesa {
@@ -92,7 +98,7 @@ nav div a {
 #menu_responsive{
   display: none;
 }
-/* Main content layout */
+/* Contenido principal*/
 main {
   display: flex;
   justify-content: center;
