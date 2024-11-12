@@ -1,34 +1,35 @@
 if (window.location.href.includes("index.html")) {
-  fetch("http://127.0.0.1:5000/api/cotizaciones")
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    if (data.cotizaciones) {
-      // Itera sobre las cotizaciones y las agrega al DOM
-      data.cotizaciones.forEach(cotizacion => {
-        let nombre = cotizacion.nombre;
-        agregarCotizacion(cotizacion.moneda,cotizacion.tipo,cotizacion.venta, cotizacion.compra, cotizacion.fecha);
-      });
-      actualizarFecha(data.ultima_actualizacion);
-    }
-  })
-  .catch(error => {
-    console.error("Error al obtener las cotizaciones:", error);
-    console.log("Intentar traer del cache")
-    fetch("../back/cotizaciones.json")
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch("http://127.0.0.1:5000/api/cotizaciones")
     .then(response => response.json())
     .then(data => {
-    console.log(data);
-    if (data.cotizaciones) {
-      // Itera sobre las cotizaciones y las agrega al DOM
-      data.cotizaciones.forEach(cotizacion => {
-        agregarCotizacion(cotizacion.moneda,cotizacion.tipo,cotizacion.venta, cotizacion.compra, cotizacion.fecha);
-      });
-      actualizarFecha(data.ultima_actualizacion);
-    }
-  })
-  });
-}
+      console.log(data);
+      if (data.cotizaciones) {
+        // Itera sobre las cotizaciones y las agrega al DOM
+        data.cotizaciones.forEach(cotizacion => {
+          let nombre = cotizacion.nombre;
+          agregarCotizacion(cotizacion.moneda,cotizacion.tipo,cotizacion.venta, cotizacion.compra, cotizacion.fecha);
+        });
+        actualizarFecha(data.ultima_actualizacion);
+      }
+    })
+    .catch(error => {
+      console.error("Error al obtener las cotizaciones:", error);
+      console.log("Intentar traer del cache")
+      fetch("../back/cotizaciones.json")
+      .then(response => response.json())
+      .then(data => {
+      console.log(data);
+      if (data.cotizaciones) {
+        // Itera sobre las cotizaciones y las agrega al DOM
+        data.cotizaciones.forEach(cotizacion => {
+          agregarCotizacion(cotizacion.moneda,cotizacion.tipo,cotizacion.venta, cotizacion.compra, cotizacion.fecha);
+        });
+        actualizarFecha(data.ultima_actualizacion);
+      }
+    })
+    });
+})}
 
 
 function agregarCotizacion(moneda,tipo, venta, compra,fecha) {

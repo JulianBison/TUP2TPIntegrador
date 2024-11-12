@@ -180,7 +180,7 @@ main {
 }
 
 /* Formulario estilos */
-.formularios {
+form {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -191,9 +191,13 @@ main {
 }
 #enviarCotizaciones{
   display: none;
+  flex-direction: column;
+  gap: 5px;
 }
 #enviarHistorico{
   display: none;
+  flex-direction: column;
+  gap: 5px;
 }
 input, textarea, button {
   width: 100%;

@@ -237,7 +237,7 @@ def formatear_datos_historico_a_mail(tipo_dolar, fecha_inicio, fecha_fin, valore
         datos_cambio = buscar_historico_fecha_cambio(tipo_dolar, fecha_str)
         if datos_cambio:
             datos_historicos.append(datos_cambio)
-    # Comenzamos el HTML para la tabla
+    # Armamos la filas de titulos
     mail = f'Cotizacion para el Dolar {tipo_dolar}\n'
     mail += f"{'Fecha':<20} | {'Compra':<10} | {'Venta':<10}\n"
     mail += ("-" * 40+'\n')
@@ -277,6 +277,7 @@ def contacto():
         return jsonify({"error": "No se proporcionaron datos"}), 400
     mensaje_enviar=f'{data['mensaje']} \n'
     mensaje_enviar+=f'Responder al mail:{data['email']}'
+    #print(f"Contacto recibido: {data}") #revisar informacion de contacto
     #Aca pusimos un mail nuestro como si fuera el mail de contacto para recibir la informacion de contacto de la pagina web
     mail_enviar(data['nombre'],data['apellido'],'bisonjulian@gmail.com',mensaje_enviar,data['email'])
     return jsonify({"status": "Contacto recibido", "data": data}), 200
@@ -297,13 +298,13 @@ def cotizaciones_email():
     if not data:
         return jsonify({"error": "No se proporcionaron datos"}), 400
 
-    # print(f"Contacto recibido: {data}")  # Ejemplo de procesamiento
+    
     cotizaciones=obtener_y_guardar_cotizaciones()
     cotizaciones_enviar=f'Cotizaciones actuales: \n'
     cotizaciones_enviar+=f'{'Moneda':<15} | {'Tipo':<15} | {'Compra':<5} | {'Venta':<5} | {'Fecha':<25}\n'
     for cotizacion in cotizaciones['cotizaciones']:
         cotizaciones_enviar+=f'{cotizacion['moneda']} | {cotizacion['tipo']} | {cotizacion['compra']} | {cotizacion['venta']} | {cotizacion['fecha']}\n'
-        
+    #print(cotizaciones_enviar) #revisar cotizaciones enviar
     mail_enviar(data['nombre'],data['apellido'],data['email'],cotizaciones_enviar)
     return jsonify({"status": "Cotizaciones recibias", "data": data}), 200
 
@@ -324,7 +325,7 @@ def historico_email():
         return jsonify({"error": "No se proporcionaron datos"}), 400
     #Conseguimos y formateamos los datos del historico para enviarlos por mail de manera mas ordenada en el mail
     historico=formatear_datos_historico_a_mail(informacion['dolar'],informacion['fechainicio'],informacion['fechafin'],informacion['valores'])
-    #print(historico)
+    #print(historico) #revisar historico a enviar
     mail_enviar(informacion['nombre'],informacion['apellido'],informacion['email'],historico)
     return jsonify({"status": "Historico recibido", "data": informacion}), 200
 
