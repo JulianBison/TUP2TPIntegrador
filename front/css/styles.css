@@ -253,7 +253,9 @@ main {
   color: var(--secondary);
 }
 
-
+#enviarHistorico{
+  display: none;
+}
 
 /* Media Queries */
 @media (max-width: 1024px) {
