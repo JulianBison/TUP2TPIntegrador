@@ -270,7 +270,8 @@ main {
 }
 
 .label{
-  margin: 5px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 /* Media Queries */
 @media (max-width: 1024px) {
