@@ -275,10 +275,9 @@ def contacto():
     data = request.get_json()
     if not data:
         return jsonify({"error": "No se proporcionaron datos"}), 400
-
-    # Aquí puedes agregar el procesamiento que necesites con `data`, como guardar en una base de datos o enviar un correo
-    # print(f"Contacto recibido: {data}")  # Ejemplo de procesamiento
-    mail_enviar(data['nombre'],data['apellido'],'bisonjulian@gmail.com',data['mensaje'])
+    
+    #Aca pusimos un mail nuestro como si fuera el mail de contacto para recibir la informacion de contacto de la pagina web
+    mail_enviar(data['nombre'],data['apellido'],'bisonjulian@gmail.com',data['mensaje'],data['email'])
     return jsonify({"status": "Contacto recibido", "data": data}), 200
 
 @app.route('/api/cotizaciones/email', methods=['POST', 'OPTIONS'])
@@ -297,7 +296,6 @@ def cotizaciones_email():
     if not data:
         return jsonify({"error": "No se proporcionaron datos"}), 400
 
-    # Aquí puedes agregar el procesamiento que necesites con `data`, como guardar en una base de datos o enviar un correo
     # print(f"Contacto recibido: {data}")  # Ejemplo de procesamiento
     cotizaciones=obtener_y_guardar_cotizaciones()
     
@@ -320,16 +318,15 @@ def historico_email():
     informacion = request.get_json()
     if not informacion:
         return jsonify({"error": "No se proporcionaron datos"}), 400
-
-    # Aquí puedes agregar el procesamiento que necesites con `data`, como guardar en una base de datos o enviar un correo
+    #Conseguimos y formateamos los datos del historico para enviarlos por mail de manera mas ordenada en el mail
     historico=formatear_datos_historico_a_mail(informacion['dolar'],informacion['fechainicio'],informacion['fechafin'],informacion['valores'])
-    print(historico)
+    #print(historico)
     mail_enviar(informacion['nombre'],informacion['apellido'],informacion['email'],historico)
     return jsonify({"status": "Contacto recibido", "data": informacion}), 200
 
 
-
-def mail_enviar(nombre,apellido,email,informacion_enviar):
+#Funcion funcion para enviar la informacion necesaria por mail
+def mail_enviar(nombre,apellido,email,informacion_enviar,reply='bisonjulian@gmail.com'):
     data = {
         'service_id': 'service_9lmfke1',
         'template_id': 'template_iqc45hy',
@@ -339,7 +336,8 @@ def mail_enviar(nombre,apellido,email,informacion_enviar):
             'from_name': 'Pagina Cotizaciones',
             'to_name': f'{nombre} {apellido}',
             'to_mail':f'{email}',
-            'message': f'Cotizacion pedida {informacion_enviar}'
+            'message': f'{informacion_enviar}',
+            'to_reply':f'{reply}'
         }
     }
 
@@ -361,7 +359,7 @@ def mail_enviar(nombre,apellido,email,informacion_enviar):
         response.raise_for_status()
         print('Your mail is sent!')
     except requests.exceptions.RequestException as error:
-        print(f'Oops... {error}')
+        print(f'Hubo un error ... {error}')
         if error.response is not None:
             print(error.response.text)
 
