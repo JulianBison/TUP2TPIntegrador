@@ -26,9 +26,9 @@
         <img src="./images/ilustracion-signo-dolar.png" alt="logo dolar">
       </div>
       <div class="menu">
-        <a class="active" href="../front/index.html">Home</a>
+        <a href="../front/index.html">Home</a>
         <a href="../front/historico.html">Histórico</a>
-        <a href="../front/contacto.html">Contacto</a>
+        <a class="active" href="../front/contacto.html">Contacto</a>
       </div>
       <div class="actualización">
         <p>
@@ -40,20 +40,21 @@
 
   <main>
     <div class="formatoprincipal">
-      <div class="principal">
-        <h1>Cotización actuales de monedas</h1>
-      </div>
-      <div class="principal_tarjeta">
-        <div class="tarjeta">
-          
-            <h2 id="nombre-moneda"></h2>
-            <h2 id="tipo"></h2>
-            <p id="precio-compra"></p>
-            <p id="precio-venta"></p>
-            <p id="fecha-actualizacion"></p>
+      <form id="formularioContacto">
+        <label class="label" for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
 
-        </div>
-      </div>
+        <label class="label" for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" required>
+
+        <label class="label" for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label class="label" for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" required></textarea>
+
+        <button class="label" type="submit">Enviar</button>
+    </form>
     </div>
   </main>
 

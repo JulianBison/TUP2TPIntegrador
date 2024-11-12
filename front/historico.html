@@ -37,9 +37,32 @@
     <div class="formatoprincipal">
       <div class="principal">
         <h1>Historico Cotización de monedas</h1>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur, dolorum. Vel fugiat voluptas nostrum
-          earum, facere repellat sed distinctio eaque deleniti! Ut sit quia atque, molestiae enim excepturi asperiores
-          exercitationem.</p>
+        <form id="DatosHistorico">
+          <label for="dolar">Elegi el tipo de dolar:</label>
+          <select id="dolar" name="dolar" required>
+            <option value="oficial">Oficial</option>
+            <option value="blue">Blue</option>
+            <option value="bolsa">Bolsa</option>
+            <option value="contadoconliqui">Contado con liquidacion</option>
+            <option value="cripto">Cripto</option>
+            <option value="mayorista">Mayorista</option>
+            <option value="solidario">Solidario</option>
+            <option value="turista">Turista</option>
+          </select> 
+          
+          <label for="fechainicio">Fecha:</label>
+          <input type="date" id="fechainicio" name="fechainicio" required>
+
+          <label for="fechafin">Fecha:</label>
+          <input type="date" id="fechafin" name="fechafin" required>
+  
+          <label for="valores">Cantidad de valores:</label>
+          <input type="number" id="valores" name="valores" required>
+  
+          <button type="submit">Armar Grafico</button>
+        </form>
+        <h2>Gráfico de Datos con Chart.js</h2>
+        <canvas id="Grafico" width="400" height="200"></canvas>
       </div>
   </main>
     <footer class="footer">
@@ -50,8 +73,8 @@
           <a href="#">Malcom Foca</a>
           <a href="#">Ezequiel Natale</a>
         </div>
-        <div>Tecnicatura en programación - UTN</div>
-        <div>Datos tomados desde dolarapi.com</div>
+        <div class="footer-datos">Tecnicatura en programación - UTN</div>
+        <div class="footer-datos">Datos tomados desde dolarapi.com</div>
       </div>
     </footer>
 </body>
