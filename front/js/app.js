@@ -1,5 +1,29 @@
+//funcion para esconder o mostrar el menu de hamburguesa
+function toggleMenu() {
+  const menuResponsive = document.getElementById('menu_responsive');
+  menuResponsive.classList.toggle('mostrarmenu');
+}
+
+//funcion para esconder el menu al scrollear
+let prevScrollPos = window.scrollY;
+const nav = document.querySelector('.nav');
+
+window.onscroll = function() {
+  let currentScrollPos = window.scrollY;
+  
+  if (prevScrollPos > currentScrollPos) {
+    nav.classList.remove("nav-hidden");
+  } else {
+    nav.classList.add("nav-hidden");
+  }
+  
+  prevScrollPos = currentScrollPos;
+};
+//verifica que estamos en el index.html
 if (window.location.href.includes("index.html")) {
+  //verifica que este cargado todo el DOM
   document.addEventListener('DOMContentLoaded', () => {
+    //Realiza el fetch para traer las cotizaciones actuales
     fetch("http://127.0.0.1:5000/api/cotizaciones")
     .then(response => response.json())
     .then(data => {
@@ -15,6 +39,7 @@ if (window.location.href.includes("index.html")) {
     })
     .catch(error => {
       console.error("Error al obtener las cotizaciones:", error);
+      //en caso de falla intenta traer del archivo json guardado las ultimas cotizaciones disponibles
       console.log("Intentar traer del cache")
       fetch("../back/cotizaciones.json")
       .then(response => response.json())
@@ -31,7 +56,7 @@ if (window.location.href.includes("index.html")) {
     });
 })}
 
-
+//funcion para agregar tarjetas copiando una ya creada
 function agregarCotizacion(moneda,tipo, venta, compra,fecha) {
   let contenedor = document.querySelector(".principal_tarjeta");
   let tarjeta = document.getElementsByClassName("tarjeta")[0].cloneNode(true);
@@ -63,11 +88,11 @@ function actualizarFecha(fecha) {
   } else {
     console.error("No se encontró el elemento con el id 'ultima_actualizacion'.");
   }
-
+  //EVento para hacer aparecer el formulario para enviar las cotizaciones actuales
   document.getElementById('envioCotizacionesMostrar').addEventListener('click', function(event) {
     document.getElementById('enviarCotizaciones').style.display = 'flex';
   })
-
+  //Evento para al completar el formulario enviar las cotizaciones actuales por mail
   const formulario3 = document.getElementById('enviarCotizaciones');
   formulario3.addEventListener('submit', function(event) {
         event.preventDefault(); // Evita que el formulario se envíe de manera tradicional
@@ -105,19 +130,19 @@ function actualizarFecha(fecha) {
     })
 }
 
-
+//Verifica que estemos en el historico.html
 if (window.location.href.includes("historico.html")){
   document.getElementById('datosHistorico').addEventListener('submit', function(event) {
     event.preventDefault();
   
-    // Obtener valores del formulario
+    // Obtener valores del formulario del historico para hacer la peticion
     const dolar = document.getElementById('dolar').value;
     const fechainicio = document.getElementById('fechainicio').value;
     const fechafin = document.getElementById('fechafin').value;
     const valores = parseInt(document.getElementById('valores').value);
   
     const peticion = `http://127.0.0.1:5000/api/historico/${dolar}/${fechainicio}/${fechafin}/${valores}`;
-    
+    //hace la peticion de los datos para graficar los formulario
     fetch(peticion, {mode: 'cors'})
       .then(response => response.json())
       .then(data => {
@@ -193,7 +218,7 @@ if (window.location.href.includes("historico.html")){
           }
         };
   
-        // Crear o actualizar el gráfico
+        // Crear o actualizar el gráfico revisa que no haya grafico para destruir el que este en caso de que pidamos otro grafico
         const ctx = document.getElementById('Grafico').getContext('2d');
         if (window.myChart) {
           window.myChart.destroy();  // Destruir gráfico previo si existe
@@ -202,11 +227,11 @@ if (window.location.href.includes("historico.html")){
       })
       .catch(error => console.error('Error en la petición:', error));
   });
-
+  //Evento para mostrar el formulario para enviar los datos del historico por mail
   document.getElementById('envioHistoricoMostrar').addEventListener('click', function(event) {
     document.getElementById('enviarHistorico').style.display = 'flex';
   })
-
+  //Evento  del formulario para enviar los datos del historico por mail
   const formulario2 = document.getElementById('enviarHistorico');
   formulario2.addEventListener('submit', function(event) {
         event.preventDefault(); // Evita que el formulario se envíe de manera tradicional
@@ -250,29 +275,11 @@ if (window.location.href.includes("historico.html")){
     })
 };
 
-function toggleMenu() {
-  const menuResponsive = document.getElementById('menu_responsive');
-  menuResponsive.classList.toggle('mostrarmenu');
-}
-
-//funcion para esconder el menu al scrollear
-let prevScrollPos = window.scrollY;
-const nav = document.querySelector('.nav');
-
-window.onscroll = function() {
-  let currentScrollPos = window.scrollY;
-  
-  if (prevScrollPos > currentScrollPos) {
-    nav.classList.remove("nav-hidden");
-  } else {
-    nav.classList.add("nav-hidden");
-  }
-  
-  prevScrollPos = currentScrollPos;
-};
-
+//Reviso que este en contacto.html
 if (window.location.href.includes("contacto.html")){
+  //Reviso que haya terminado de cargar la pagina
   document.addEventListener('DOMContentLoaded', () => {
+    //Evento al enviar el formulario de contacto
     const formulario = document.getElementById('formularioContacto');
 
     formulario.addEventListener('submit', function(event) {

@@ -92,11 +92,12 @@ def obtener_y_guardar_cotizaciones():
         if not os.path.exists(ruta_cotizaciones_json):
             return obtener_datos_api_y_guardar()
 
-        # Si el archivo JSON existe, verifica la fecha de la última actualización
+        # Si el archivo JSON existe, trae la fecha de la última actualización
         with open(ruta_cotizaciones_json, "r", encoding="utf-8") as archivo_cotizacion:
             data = json.load(archivo_cotizacion)
             ultima_actualizacion = datetime.fromisoformat(data.get("ultima_actualizacion", "1970-01-01T00:00:00"))
         
+        # Compara la fecha de actualizacion con la fecha actual
         # Si han pasado más de 5 minutos desde la última actualización, actualizamos los datos
         if datetime.now() - ultima_actualizacion > timedelta(minutes=5):
             return obtener_datos_api_y_guardar()
@@ -108,10 +109,10 @@ def obtener_y_guardar_cotizaciones():
         print(f"Error al manejar el archivo JSON: {e}")
         return {"error": "Error al obtener datos"}, 500
 
-# Función para obtener datos de la API y guardar en el archivo JSON
+# Función para obtener datos de las cotizaciones actuales de la API y guardar en el archivo JSON
 def obtener_datos_api_y_guardar():
     try:
-        # Realiza la primer solicitud a la API para obtener los datos de todos los valores
+        # Realiza la primer solicitud a la API para obtener los datos de todos los dolares
         response = requests.get("https://dolarapi.com/v1/dolares")
         response.raise_for_status()
         listamonedas = []
@@ -143,11 +144,11 @@ def obtener_datos_api_y_guardar():
     except requests.RequestException as e:
         print(f"Error al obtener los datos de la API: {e}")
         return {"error": "Error al obtener datos de la API"}, 500
-
+# Funcion para traer los datos historicos de cada casa y guardarlos en el json
 def obtener_datos_historico_api():
     tipos_cambios = ['oficial', 'blue', 'bolsa', 'contadoconliqui', 'cripto', 'mayorista', 'solidario', 'turista']
     historico = []
-    
+    #trae los datos de cada casa definidas arriba y los guarda en el historico
     for cambio in tipos_cambios:
         url = f"https://api.argentinadatos.com/v1/cotizaciones/dolares/{cambio}"
         try:
@@ -161,29 +162,31 @@ def obtener_datos_historico_api():
         except requests.RequestException as e:
             print(f"Error al obtener datos para {cambio}: {e}")
     
-    # Agregar la última actualización
+    # Agregar la última actualización al hsitorico
     historico.append({
         "ultima_actualizacion": datetime.now().isoformat()
     })
     
-    # Guardar en un archivo JSON
+    # Guardar en el archivo JSON historico.json
     with open(ruta_historico_json, "w", encoding="utf-8") as archivo_historico:
         json.dump(historico, archivo_historico, ensure_ascii=False, indent=4)
     
     return historico
 
+#funcion para revisar si el historico esta actualizado y traerlo
 def revisar_historico():
     try:
-        # Verificar si el archivo JSON existe
+        # Verificar si el archivo historico.json existe
         if not os.path.exists(ruta_historico_json):
             return obtener_datos_historico_api()
 
-        # Leer el archivo JSON existente
+        # Leer el archivo json existente y trae la ultima fecha de actualizacion
         with open(ruta_historico_json, "r", encoding="utf-8") as f:
             data = json.load(f)
             ultima_actualizacion = datetime.fromisoformat(data[-1].get("ultima_actualizacion", "1970-01-01T00:00:00"))
 
-        # Actualizar si han pasado más de 24 horas
+        # Compara la fecha de actualizacion con la fecha actual
+        # Si han pasado más de 24 horas se actualiza
         if datetime.now() - ultima_actualizacion > timedelta(hours=24):
             return obtener_datos_historico_api()
 
@@ -196,7 +199,7 @@ def revisar_historico():
 def buscar_historico_fecha_cambio(tipo_dolar, fecha_buscada):
     historico = revisar_historico()
     
-    # Buscar el tipo de cambio y fecha específica
+    # Buscar el tipo de cambio y fecha específica para retornarlo en forma de diccionario
     for registro in historico:
         if registro.get("tipo") == tipo_dolar:
             for entrada in registro["datos"]:
@@ -210,6 +213,7 @@ def buscar_historico_fecha_cambio(tipo_dolar, fecha_buscada):
     # Si no se encuentra, retornar None
     return None
 
+#funcion que devuelve los datos para graficar el historico
 def obtener_historico(tipo_dolar, fecha_inicio, fecha_fin, valores):
     fechainicial = datetime.strptime(fecha_inicio, "%Y-%m-%d")
     fechafinal = datetime.strptime(fecha_fin, "%Y-%m-%d")
@@ -225,6 +229,7 @@ def obtener_historico(tipo_dolar, fecha_inicio, fecha_fin, valores):
     
     return jsonify(datosgrafica)
 
+#funcion que arma los datos de forma tal que se vean mejor para mandarlos por mail
 def formatear_datos_historico_a_mail(tipo_dolar, fecha_inicio, fecha_fin, valores):
     fechainicial = datetime.strptime(fecha_inicio, "%Y-%m-%d")
     fechafinal = datetime.strptime(fecha_fin, "%Y-%m-%d")
@@ -246,20 +251,19 @@ def formatear_datos_historico_a_mail(tipo_dolar, fecha_inicio, fecha_fin, valore
         mail+=f"{dato['fecha']:<20} | {dato['compra']:<10} | {dato['venta']:<10}\n"
     return mail
 
+#ruta para pedir el historico utilizando get con variables en la URL
 @app.route('/api/historico/<tipo_dolar>/<fecha_inicio>/<fecha_fin>/<int:valores>')
 def api_historico(tipo_dolar, fecha_inicio, fecha_fin, valores):
     return obtener_historico(tipo_dolar, fecha_inicio, fecha_fin, valores)
 
 
-
+#ruta para traer las cotizaciones actuales
 @app.route('/api/cotizaciones', methods=['GET'])
 def obtener_cotizaciones():
     data = obtener_y_guardar_cotizaciones()
     return jsonify(data)
 
-
-
-
+#ruta para enviar formulario de contacto
 @app.route('/api/contacto/', methods=['POST', 'OPTIONS'])
 def contacto():
     if request.method == 'OPTIONS':
@@ -271,10 +275,13 @@ def contacto():
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
-    # Procesa la solicitud POST aquí
+    # Procesa la solicitud POST recibida
     data = request.get_json()
     if not data:
         return jsonify({"error": "No se proporcionaron datos"}), 400
+    
+    #Trabaja los datos del post. Agrega el mensaje y el mail de la persona que lo envia
+    #Por si es necesario responder ademas del reply automatico en caso de falla
     mensaje_enviar=f'{data['mensaje']} \n'
     mensaje_enviar+=f'Responder al mail:{data['email']}'
     #print(f"Contacto recibido: {data}") #revisar informacion de contacto
@@ -282,6 +289,7 @@ def contacto():
     mail_enviar(data['nombre'],data['apellido'],'bisonjulian@gmail.com',mensaje_enviar,data['email'])
     return jsonify({"status": "Contacto recibido", "data": data}), 200
 
+#Ruta para enviar todas las cotizaciones actuales por mail
 @app.route('/api/cotizaciones/email/', methods=['POST', 'OPTIONS'])
 def cotizaciones_email():
     if request.method == 'OPTIONS':
@@ -293,12 +301,13 @@ def cotizaciones_email():
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
-    # Procesa la solicitud POST aquí
+    # Procesa la solicitud POST recibida
     data = request.get_json()
     if not data:
         return jsonify({"error": "No se proporcionaron datos"}), 400
 
-    
+    #Trabaja los datos del post
+    #Trae las cotizaciones actuales y la formatea de una manera mas ordenada para enviarlas por mail
     cotizaciones=obtener_y_guardar_cotizaciones()
     cotizaciones_enviar=f'Cotizaciones actuales: \n'
     cotizaciones_enviar+=f'{'Moneda':<15} | {'Tipo':<15} | {'Compra':<5} | {'Venta':<5} | {'Fecha':<25}\n'
@@ -319,7 +328,7 @@ def historico_email():
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
-    # Procesa la solicitud POST aquí
+    # Procesa la solicitud POST recibida
     informacion = request.get_json()
     if not informacion:
         return jsonify({"error": "No se proporcionaron datos"}), 400
@@ -329,8 +338,12 @@ def historico_email():
     mail_enviar(informacion['nombre'],informacion['apellido'],informacion['email'],historico)
     return jsonify({"status": "Historico recibido", "data": informacion}), 200
 
-
-#Funcion funcion para enviar la informacion necesaria por mail
+'''
+Funcion para enviar la informacion necesaria por mail
+Tiene 5 parametros, nombre, apellido a rellenar,mail destinatario para enviarlo ,
+informacion que se quiere enviar por mail, mail al que se le debe devolver la respuesta por defecto uno nuestro
+ya que enviamos mail a una persona externa (cotizaciones,historico)
+'''
 def mail_enviar(nombre,apellido,email,informacion_enviar,reply='bisonjulian@gmail.com'):
     data = {
         'service_id': 'service_9lmfke1',
@@ -370,7 +383,7 @@ def mail_enviar(nombre,apellido,email,informacion_enviar,reply='bisonjulian@gmai
 
 
 
-
+#Ejecuta la app flask
 
 if __name__ == '__main__':
     app.run(debug=True)
