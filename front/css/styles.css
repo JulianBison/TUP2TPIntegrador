@@ -172,6 +172,68 @@ main {
 }
 
 
+
+#formularioContacto {
+  width: 100%;
+  max-width: 600px;  
+  margin: 40px ;  
+  padding: 40px;
+  background-color: var(--secondary);  
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+}
+
+#formularioContacto .label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: var(--principal);  
+}
+
+
+input[type="text"], input[type="email"], textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--secondary);  
+  font-size: 1rem;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+
+textarea {
+  height: 120px;
+  resize: vertical;  
+}
+
+
+input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+  border-color: var(--backcolor1);  
+  outline: none;
+}
+
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--backcolor1);  
+  color: var(--secondary);  
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+button[type="submit"]:hover {
+  background-color: var(--secondary2);  
+  scale: 1.05;
+  transition: ease-in-out 0.2s;
+}
+
 /* punto de corte 720px */
 @media (max-width: 720px) {
   .container_nav, .container_footer {
@@ -236,4 +298,21 @@ main {
     font-size: 14px;
     text-align: center;
   }
+}
+
+#formularioContacto {
+  max-width: 100%;  /* El formulario ocupa el 100% del ancho disponible */
+  padding: 15px;
+}
+
+.label {
+  font-size: 0.9rem;  /* Font size más pequeño en móviles */
+}
+
+input[type="text"], input[type="email"], textarea {
+  font-size: 0.95rem;  /* Reduce el tamaño del texto en los campos */
+}
+
+button[type="submit"] {
+  font-size: 1rem;  /* Reduce el tamaño del botón en móviles */
 }
