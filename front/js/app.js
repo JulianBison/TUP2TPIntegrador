@@ -36,7 +36,6 @@ function agregarCotizacion(moneda,tipo, venta, compra,fecha) {
   let contenedor = document.querySelector(".principal_tarjeta");
   let tarjeta = document.getElementsByClassName("tarjeta")[0].cloneNode(true);
   let fechaFormateada = '';
-  let nombreTarjeta
   fechaFormateada = fechaFormateada.concat(fecha.slice(0,10)," ",fecha.slice(11,19));
   tarjeta.querySelector("#nombre-moneda").innerHTML = moneda;
   tarjeta.querySelector("#tipo").innerHTML = tipo;
@@ -103,11 +102,7 @@ function actualizarFecha(fecha) {
             console.error('Error:', error);
             alert('Hubo un error al enviar las cotizaciones.');
         });
-  
-  
     })
-
-
 }
 
 
