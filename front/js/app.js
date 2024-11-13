@@ -8,17 +8,18 @@ function toggleMenu() {
 let prevScrollPos = window.scrollY;
 const nav = document.querySelector('.nav');
 
-window.onscroll = function() {
-  let currentScrollPos = window.scrollY;
+// window.onscroll = function() {
+//   let currentScrollPos = window.scrollY;
   
-  if (prevScrollPos > currentScrollPos) {
-    nav.classList.remove("nav-hidden");
-  } else {
-    nav.classList.add("nav-hidden");
-  }
+//   if (prevScrollPos > currentScrollPos) {
+//     nav.classList.remove("nav-hidden");
+//   } else {
+//     nav.classList.add("nav-hidden");
+//   }
   
-  prevScrollPos = currentScrollPos;
-};
+//   prevScrollPos = currentScrollPos;
+// };
+
 //verifica que estamos en el index.html
 if (window.location.href.includes("index.html")) {
   //verifica que este cargado todo el DOM

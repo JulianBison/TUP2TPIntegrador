@@ -137,7 +137,7 @@ def obtener_datos_api_y_guardar():
         # Guarda los datos en el archivo JSON con codificación UTF-8
         with open(ruta_cotizaciones_json, "w", encoding="utf-8") as archivo_cotizacion:
             json.dump({"cotizaciones": cotizaciones, "ultima_actualizacion": datetime.now().isoformat()},
-                      archivo_cotizacion, ensure_ascii=False, indent=4)
+                    archivo_cotizacion, ensure_ascii=False, indent=4)
 
         return {"cotizaciones": cotizaciones, "ultima_actualizacion": datetime.now().isoformat()}
 
